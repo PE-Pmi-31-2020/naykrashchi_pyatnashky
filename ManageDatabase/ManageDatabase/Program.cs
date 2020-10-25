@@ -48,10 +48,8 @@ namespace ManageDatabase
             }
         }
 
-        static void Main(string[] args)
+        static void PrintData(string connectionString)
         {
-            string connectionString = "Server=127.0.0.1;Port=5432;Database=fifteens_database;User Id=postgres;Password=Andriy1986;";
-            //FillUserWithTestData(connectionString, 30);
             using (var con = new NpgsqlConnection(connectionString))
             {
                 con.Open();
@@ -77,7 +75,7 @@ namespace ManageDatabase
 
                     using (NpgsqlDataReader rdr = cmd.ExecuteReader())
                     {
-                        Console.WriteLine($"{rdr.GetName(0),-10} {rdr.GetName(1),-10} {rdr.GetName(2),-10} {rdr.GetName(3), -30} {rdr.GetName(4),10}");
+                        Console.WriteLine($"{rdr.GetName(0),-10} {rdr.GetName(1),-10} {rdr.GetName(2),-10} {rdr.GetName(3),-30} {rdr.GetName(4),10}");
 
                         while (rdr.Read())
                         {
@@ -86,6 +84,13 @@ namespace ManageDatabase
                     }
                 }
             }
+        }
+
+        static void Main(string[] args)
+        {
+            string connectionString = "Server=127.0.0.1;Port=5432;Database=fifteens_database;User Id=postgres;Password=Andriy1986;";
+            //FillUserWithTestData(connectionString, 30);
+            PrintData(connectionString);
         }
     }
 }
