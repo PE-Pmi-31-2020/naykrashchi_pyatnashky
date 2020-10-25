@@ -50,8 +50,42 @@ namespace ManageDatabase
 
         static void Main(string[] args)
         {
-            string connectionString = "Server=127.0.0.1;Port=5432;Database=fifteens_database;User Id=postgres;Password=555;";
-            FillUserWithTestData(connectionString, 30);
+            string connectionString = "Server=127.0.0.1;Port=5432;Database=fifteens_database;User Id=postgres;Password=Andriy1986;";
+            //FillUserWithTestData(connectionString, 30);
+            using (var con = new NpgsqlConnection(connectionString))
+            {
+                con.Open();
+
+                var sql = "SELECT * FROM \"user\"";
+
+                using (var cmd = new NpgsqlCommand(sql, con))
+                {
+
+                    using (NpgsqlDataReader rdr = cmd.ExecuteReader())
+                    {
+                        Console.WriteLine($"{rdr.GetName(0),-10} {rdr.GetName(1),-10} {rdr.GetName(2),10}");
+
+                        while (rdr.Read())
+                        {
+                            Console.WriteLine($"{rdr.GetInt32(0),-10} {rdr.GetString(1),-10} {rdr.GetString(2),10}");
+                        }
+                    }
+                }
+                sql = "SELECT * from \"match\"";
+                using (var cmd = new NpgsqlCommand(sql, con))
+                {
+
+                    using (NpgsqlDataReader rdr = cmd.ExecuteReader())
+                    {
+                        Console.WriteLine($"{rdr.GetName(0),-10} {rdr.GetName(1),-10} {rdr.GetName(2),-10} {rdr.GetName(3), -30} {rdr.GetName(4),10}");
+
+                        while (rdr.Read())
+                        {
+                            Console.WriteLine($"{rdr.GetInt32(0),-10} {rdr.GetInt32(1),-10} {rdr.GetInt32(2),-10} {rdr.GetDateTime(3),-30}  {rdr.GetInt32(4),10}");
+                        }
+                    }
+                }
+            }
         }
     }
 }
