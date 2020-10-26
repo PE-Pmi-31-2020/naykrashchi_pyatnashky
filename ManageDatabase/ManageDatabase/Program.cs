@@ -5,6 +5,38 @@ namespace ManageDatabase
 {
     class Program
     {
+        static void CreateDataBase(string connectionString)
+        {
+            using (var con = new NpgsqlConnection(connectionString))
+            {
+                con.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = con;
+                    cmd.CommandText = "CREATE TABLE \"user\" " +
+                        "(user_id SERIAL PRIMARY KEY, " +
+                        "login VARCHAR(50) UNIQUE NOT NULL, " +
+                        "password VARCHAR(50) NOT NULL)";
+                    cmd.ExecuteNonQuery();  
+
+                    cmd.CommandText = "CREATE TABLE \"match\" " +
+                        "(match_id SERIAL PRIMARY KEY, " +
+                        "user_id INT, " +
+                        "duration INT, " +
+                        "date_time TIMESTAMP, " +
+                        "score INT, " +
+                        "\"result\" BOOLEAN, " +
+                        "layout BIGINT, " +
+                        "turns INT, " +
+                        "custom_picture VARCHAR(100), " +
+                        "FOREIGN KEY(user_id) REFERENCES \"user\"(user_id))";
+                    cmd.ExecuteNonQuery();  
+                }
+            }
+
+
+        }
+
         static void CreateRandomStrings(int count, out string[] userStrings, out string[] matchStrings)
         {
             userStrings = new string[count];
@@ -88,8 +120,9 @@ namespace ManageDatabase
 
         static void Main(string[] args)
         {
-            string connectionString = "Server=127.0.0.1;Port=5432;Database=fifteens_database;User Id=postgres;Password=Andriy1986;";
-            //FillUserWithTestData(connectionString, 30);
+            string connectionString = "Server=127.0.0.1;Port=5432;Database=fifteens_database;User Id=postgres;Password=555;";
+            //CreateDataBase(connectionString);
+            FillUserWithTestData(connectionString, 30);
             PrintData(connectionString);
         }
     }
