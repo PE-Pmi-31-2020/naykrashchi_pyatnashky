@@ -120,7 +120,7 @@ namespace ManageDatabase
 
         static void Main(string[] args)
         {
-            string connectionString = "Server=127.0.0.1;Port=5432;Database=fifteens_database;User Id=postgres;Password=555;";
+            string connectionString = "Server=127.0.0.1;Port=5432;Database=fifteens_database;User Id=postgres;Password=Andriy1986;";
             //CreateDataBase(connectionString);
             FillUserWithTestData(connectionString, 30);
             PrintData(connectionString);
