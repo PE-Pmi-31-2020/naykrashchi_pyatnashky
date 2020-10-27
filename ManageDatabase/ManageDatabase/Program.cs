@@ -46,7 +46,7 @@ namespace ManageDatabase
             {
                 userStrings[i - 1] = "(\'user\' || (SELECT count(user_id) + " + i + " FROM \"user\"), \'" + rnd.Next(10000) + "\')";
                 matchStrings[i - 1] = "((SELECT user_id FROM \"user\" WHERE login = (\'user\' || (SELECT count(user_id) - " + (i - 1) + " FROM \"user\"))), "
-                    + rnd.Next(1000) + ", \'" + DateTime.Now + "\', " + rnd.Next(1000) + ", true)";
+                    + rnd.Next(1000) + ", \'" + DateTime.Now.ToString("dd.mm.yyyy HH:mm:ss") + "\', " + rnd.Next(1000) + ", true)";
             }
         }
 
@@ -120,7 +120,7 @@ namespace ManageDatabase
 
         static void Main(string[] args)
         {
-            string connectionString = "Server=127.0.0.1;Port=5432;Database=fifteens_database;User Id=postgres;Password=Andriy1986;";
+            string connectionString = "Server=127.0.0.1;Port=5432;Database=fifteens_database;User Id=postgres;Password=555;";
             //CreateDataBase(connectionString);
             FillUserWithTestData(connectionString, 30);
             PrintData(connectionString);
