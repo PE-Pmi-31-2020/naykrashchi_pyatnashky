@@ -100,11 +100,14 @@ namespace BLL
             int inversions = 0;
             for (int i = 0; i < size*size; i++)
             {
-                for (int j = 0; j < i; j++)
+                if (l[i] != 0)
                 {
-                    if (l[j] > l[i])
+                    for (int j = 0; j < i; j++)
                     {
-                        inversions++;
+                        if (l[j] > l[i])
+                        {
+                            inversions++;
+                        }
                     }
                 }
                 if(l[i] == 0)
