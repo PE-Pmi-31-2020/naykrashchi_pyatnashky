@@ -115,21 +115,19 @@ namespace BLL
                     inversions += 1 + i / size;
                 }
             }
-            return (inversions & 1) == 1;
+            return (inversions & 1) == 0;
         }
 
         public bool solved()
         {
-            int prev = 0;
             for (int i = 0; i < size; i++)
             {
                 for (int j = 0; j < size; j++)
                 {
                     if(i != size - 1 || j != size - 1)
                     {
-                        if (prev >= layout[i][j])
+                        if (i* size + j + 1 != layout[i][j])
                             return false;
-                        prev = layout[i][j];
                     }
                     else
                     {
@@ -139,41 +137,60 @@ namespace BLL
             }
             return true;
         }
-        
-
+        public void move(int x, int y)
+        {
+            if(x>0 && layout[x-1][y] == 0)
+            {
+                layout[x - 1][y] = layout[x][y];
+                layout[x][y] = 0;
+                turns++;
+            }
+            else if (x < size - 1 && layout[x + 1][y] == 0)
+            {
+                layout[x + 1][y] = layout[x][y];
+                layout[x][y] = 0;
+                turns++;
+            }
+            else if (y > 0 && layout[x][y - 1] == 0)
+            {
+                layout[x][y - 1] = layout[x][y];
+                layout[x][y] = 0;
+                turns++;
+            }
+            else if (y < size - 1 && layout[x][y + 1] == 0)
+            {
+                layout[x][y + 1] = layout[x][y];
+                layout[x][y] = 0;
+                turns++;
+            }
+        }
         public void move(moves m)
         {
+            int x = 0, y = 0;
             if(m == moves.up)
             {
-                if(up())
-                {
-                    turns++;
-                }
+                x = 0;
+                y = 1;
             }
             if (m == moves.left)
             {
-                if (left())
-                {
-                    turns++;
-                }
+                x = 1;
+                y = 0;
             }
             if (m == moves.down)
             {
-                if (down())
-                {
-                    turns++;
-                }
+                x = 0;
+                y = -1;
             }
             if (m == moves.right)
             {
-                if (right())
-                {
-                    turns++;
-                }
+                x = -1;
+                y = 0;
             }
+            if (moveTo(x, y))
+                turns++;
         }
-
-        private bool down()
+        private bool moveTo(int x, int y)
         {
             for (int i = 0; i < size; i++)
             {
@@ -181,92 +198,20 @@ namespace BLL
                 {
                     if(layout[i][j] == 0)
                     {
-                        if (i == 0)
+                        int xTo = i + y;
+                        int yTo = j + x;
+                        if(xTo >= 0 && xTo < size && yTo >= 0 && yTo < size)
                         {
-                            return false;
-                        }
-                        else
-                        {
-                            layout[i][j] = layout[i - 1][j];
-                            layout[i - 1][j] = 0;
+                            layout[i][j] = layout[xTo][yTo];
+                            layout[xTo][yTo] = 0;
                             return true;
                         }
+                        return false;
                     }
                 }
             }
             return true;
         }
-
-        private bool right()
-        {
-            for (int i = 0; i < size; i++)
-            {
-                for (int j = 0; j < size; j++)
-                {
-                    if (layout[i][j] == 0)
-                    {
-                        if (j == 0)
-                        {
-                            return false;
-                        }
-                        else
-                        {
-                            layout[i][j] = layout[i][j - 1];
-                            layout[i][j - 1] = 0;
-                            return true;
-                        }
-                    }
-                }
-            }
-            return true;
-        }
-        private bool up()
-        {
-            for (int i = 0; i < size; i++)
-            {
-                for (int j = 0; j < size; j++)
-                {
-                    if (layout[i][j] == 0)
-                    {
-                        if (i == size - 1)
-                        {
-                            return false;
-                        }
-                        else
-                        {
-                            layout[i][j] = layout[i + 1][j];
-                            layout[i + 1][j] = 0;
-                            return true;
-                        }
-                    }
-                }
-            }
-            return true;
-        }
-        private bool left()
-        {
-            for (int i = 0; i < size; i++)
-            {
-                for (int j = 0; j < size; j++)
-                {
-                    if (layout[i][j] == 0)
-                    {
-                        if (j == size - 1)
-                        {
-                            return false;
-                        }
-                        else
-                        {
-                            layout[i][j] = layout[i][j + 1];
-                            layout[i][j + 1] = 0;
-                            return true;
-                        }
-                    }
-                }
-            }
-            return true;
-        }
-
         public void print()
         {
             Console.Clear();
@@ -279,6 +224,7 @@ namespace BLL
                 }
                 Console.WriteLine();
             }
+            Console.WriteLine($"turns: {turns}");
         }
     }
     class program
