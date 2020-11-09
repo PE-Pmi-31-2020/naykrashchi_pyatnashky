@@ -10,25 +10,24 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace StudyingWPF
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for LoginWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class LoginWindow : Window
     {
-        public MainWindow()
+        public LoginWindow()
         {
             InitializeComponent();
-            ManageImagesButton.Click += FakeManageImages;
+            LogInButton.Click += fakeLogin;
         }
 
-        private void FakeManageImages(object sender, RoutedEventArgs e)
+        private void fakeLogin(object sender, RoutedEventArgs e)
         {
-            ManageImagesWindow window = new ManageImagesWindow();
+            MainWindow window = new MainWindow();
             window.Show();
             Close();
         }
