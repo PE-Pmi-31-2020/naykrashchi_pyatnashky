@@ -33,6 +33,14 @@ namespace Fifteens
             this.ManageImagesButton.Click += this.FakeManageImages;
             this.PlayButton.Click += this.FakePlay;
             this.ExitButton.Click += this.OnClickExit;
+            this.MatchHistoryButton.Click += this.OnClickMatchHistory;
+        }
+
+        private void FakePlay(object sender, RoutedEventArgs e)
+        {
+            GameWindow window = new GameWindow();
+            window.Show();
+            this.Close();
         }
 
         private void FakeManageImages(object sender, RoutedEventArgs e)
@@ -42,9 +50,9 @@ namespace Fifteens
             this.Close();
         }
 
-        private void FakePlay(object sender, RoutedEventArgs e)
+        private void OnClickMatchHistory(object sender, RoutedEventArgs e)
         {
-            GameWindow window = new GameWindow();
+            MatchHistoryWindow window = new MatchHistoryWindow();
             window.Show();
             this.Close();
         }

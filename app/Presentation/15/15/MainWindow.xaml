@@ -42,8 +42,9 @@
         </WrapPanel>
         <WrapPanel Orientation="Vertical" DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Button x:Name="PlayButton" Margin="4" Content="Play"/>
-            <Button x:Name="ManageImagesButton" Margin="4">Manage images</Button>
             <Button x:Name="UploadGameButton" Margin="4">Upload game</Button>
+            <Button x:Name="MatchHistoryButton" Margin="4">Match history</Button>
+            <Button x:Name="ManageImagesButton" Margin="4">Manage images</Button>
             <Button x:Name="ExitButton" Margin="4">Exit</Button>
         </WrapPanel>
     </DockPanel>
