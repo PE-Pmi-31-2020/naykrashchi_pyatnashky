@@ -1,15 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿// <copyright file="Program.cs" company="OnceDaughtersAlwaysDaughters">
+// Copyright (c) OnceDaughtersAlwaysDaughters. All rights reserved.
+// </copyright>
 
 namespace BLL
 {
-    public enum moves
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    public enum Moves
     {
-        up,
-        left,
-        right,
-        down
+        Up,
+        Left,
+        Right,
+        Down,
     }
 
     public class Game
@@ -164,25 +168,25 @@ namespace BLL
                 turns++;
             }
         }
-        public void move(moves m)
+        public void move(Moves m)
         {
             int x = 0, y = 0;
-            if(m == moves.up)
+            if(m == Moves.Up)
             {
                 x = 0;
                 y = 1;
             }
-            if (m == moves.left)
+            if (m == Moves.Left)
             {
                 x = 1;
                 y = 0;
             }
-            if (m == moves.down)
+            if (m == Moves.Down)
             {
                 x = 0;
                 y = -1;
             }
-            if (m == moves.right)
+            if (m == Moves.Right)
             {
                 x = -1;
                 y = 0;
@@ -239,16 +243,16 @@ namespace BLL
                 switch (ch)
                 {
                     case ConsoleKey.UpArrow:
-                        g.move(moves.up);
+                        g.move(Moves.Up);
                         break;
                     case ConsoleKey.DownArrow:
-                        g.move(moves.down);
+                        g.move(Moves.Down);
                         break;
                     case ConsoleKey.LeftArrow:
-                        g.move(moves.left);
+                        g.move(Moves.Left);
                         break;
                     case ConsoleKey.RightArrow:
-                        g.move(moves.right);
+                        g.move(Moves.Right);
                         break;
                 }
             }
