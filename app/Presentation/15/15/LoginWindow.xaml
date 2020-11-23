@@ -55,7 +55,7 @@
         <Label x:Name="LoginLabel" Content="Login" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"/>
         <TextBox x:Name="LoginInput" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Center"/>
         <Label x:Name="PasswordLabel" Content="Password" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Grid.ColumnSpan="3"/>
-        <PasswordBox x:Name="PasswordInput" PasswordChar="*" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center"/>
+        <PasswordBox x:Name="PasswordInput" PasswordChar="*" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Center"/>
         <CheckBox x:Name="RememberMeCheck" Content="Remember me" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Center"/>
         <Button x:Name="LogInButton" Content="Sign in" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" MinWidth="80"/>
         <Button x:Name="SignUpButton" Content="Sign up" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Right" MinWidth="80"/>
