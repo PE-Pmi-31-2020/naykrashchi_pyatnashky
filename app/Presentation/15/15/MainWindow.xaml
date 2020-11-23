@@ -1,7 +1,7 @@
-﻿<Window x:Class="StudyingWPF.MainWindow"
+﻿<Window x:Class="Fifteens.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:local="clr-namespace:StudyingWPF"
+        xmlns:local="clr-namespace:Fifteens"
         Title="Pyatnashky" Height="400" Width="600">
     <Window.Resources>
         <Style x:Key="TopButtonsStyle" TargetType="Button">

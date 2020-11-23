@@ -2,7 +2,7 @@
 // Copyright (c) OnceDaughtersAlwaysDaughters. All rights reserved.
 // </copyright>
 
-namespace StudyingWPF
+namespace Fifteens
 {
     using System;
     using System.Collections.Generic;

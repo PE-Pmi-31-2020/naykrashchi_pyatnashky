@@ -1,4 +1,4 @@
-﻿// <copyright file="LoginWindow.xaml.cs" company="OnceDaughtersAlwaysDaughters">
+﻿// <copyright file="GameWindow.xaml.cs" company="OnceDaughtersAlwaysDaughters">
 // Copyright (c) OnceDaughtersAlwaysDaughters. All rights reserved.
 // </copyright>
 
@@ -6,9 +6,7 @@ namespace Fifteens
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Text;
-    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Data;
@@ -19,20 +17,20 @@ namespace Fifteens
     using System.Windows.Shapes;
 
     /// <summary>
-    /// Interaction logic for LoginWindow.xaml.
+    /// Interaction logic for GameWindow.xaml
     /// </summary>
-    public partial class LoginWindow : Window
+    public partial class GameWindow : Window
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="LoginWindow"/> class.
+        /// Initializes a new instance of the <see cref="GameWindow"/> class.
         /// </summary>
-        public LoginWindow()
+        public GameWindow()
         {
             this.InitializeComponent();
-            this.LogInButton.Click += this.FakeLogin;
+            this.BackButton.Click += this.OnClickBack;
         }
 
-        private void FakeLogin(object sender, RoutedEventArgs e)
+        private void OnClickBack(object sender, RoutedEventArgs e)
         {
             MainWindow window = new MainWindow();
             window.Show();

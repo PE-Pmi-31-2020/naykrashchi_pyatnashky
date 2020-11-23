@@ -2,7 +2,7 @@
 // Copyright (c) OnceDaughtersAlwaysDaughters. All rights reserved.
 // </copyright>
 
-namespace StudyingWPF
+namespace Fifteens
 {
     using System;
     using System.Collections.Generic;
@@ -31,12 +31,26 @@ namespace StudyingWPF
         {
             this.InitializeComponent();
             this.ManageImagesButton.Click += this.FakeManageImages;
+            this.PlayButton.Click += this.FakePlay;
+            this.ExitButton.Click += this.OnClickExit;
         }
 
         private void FakeManageImages(object sender, RoutedEventArgs e)
         {
             ManageImagesWindow window = new ManageImagesWindow();
             window.Show();
+            this.Close();
+        }
+
+        private void FakePlay(object sender, RoutedEventArgs e)
+        {
+            GameWindow window = new GameWindow();
+            window.Show();
+            this.Close();
+        }
+
+        private void OnClickExit(object sender, RoutedEventArgs e)
+        {
             this.Close();
         }
     }
