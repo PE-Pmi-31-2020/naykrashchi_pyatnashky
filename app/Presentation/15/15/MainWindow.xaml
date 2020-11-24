@@ -1,12 +1,51 @@
-﻿<Window x:Class="_15.MainWindow"
+﻿<Window x:Class="Fifteens.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:_15"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+        xmlns:local="clr-namespace:Fifteens"
+        Title="Pyatnashky" Height="400" Width="600">
+    <Window.Resources>
+        <Style x:Key="TopButtonsStyle" TargetType="Button">
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Direction="215"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="Cyan"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontFamily" Value="Georgia"/>
+            <Setter Property="Background" Value="{StaticResource ButtonBackgroundBrush}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="5" BorderBrush="Black" BorderThickness="1">
+                            <ContentPresenter Margin="4 1 4 1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="DarkBlue"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#FF071C6E"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <DockPanel LastChildFill="True" UseLayoutRounding="True" Background="{StaticResource BackgroundBrush}">
+        <WrapPanel FlowDirection="RightToLeft" DockPanel.Dock="Top">
+            <Button x:Name="DeleteAccButton" DockPanel.Dock="Right" Content="Delete Account" VerticalAlignment="Top" Margin="10" Padding="4 1 4 1" Style="{StaticResource TopButtonsStyle}"/>
+            <Button x:Name="LogOutButton" DockPanel.Dock="Right" Content="Log out" VerticalAlignment="Top" Margin="10" Padding="4 1 4 1" Style="{StaticResource TopButtonsStyle}"></Button>
+            <Label x:Name="NicknameLabel" DockPanel.Dock="Right" Content="TvoyaKisa69" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="7"></Label>
+        </WrapPanel>
+        <WrapPanel Orientation="Vertical" DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button x:Name="PlayButton" Margin="4" Content="Play"/>
+            <Button x:Name="UploadGameButton" Margin="4">Upload game</Button>
+            <Button x:Name="MatchHistoryButton" Margin="4">Match history</Button>
+            <Button x:Name="ManageImagesButton" Margin="4">Manage images</Button>
+            <Button x:Name="ExitButton" Margin="4">Exit</Button>
+        </WrapPanel>
+    </DockPanel>
 </Window>
