@@ -18,91 +18,106 @@ namespace BLL
 
     public class Game
     {
-        public int match_id { get; set; }
-        public int user_id { get; set; }
-        public int duration { get; set; }
-        public DateTime date_time { get; set; }
-        public int score { get; set; }
-        public bool result  { get; set; }
-        public int size { get; set; }
-        public List<List<int>> layout  { get; set; }
-        public int turns  { get; set; }
-        public string custom_picture  { get; set; }
+        public int Match_id { get; set; }
+
+        public int User_id { get; set; }
+
+        public int Duration { get; set; }
+
+        public DateTime Date_time { get; set; }
+
+        public int Score { get; set; }
+
+        public bool Result  { get; set; }
+
+        public int Size { get; set; }
+
+        public List<List<int>> Layout { get; set; }
+
+        public int Turns { get; set; }
+
+        public string Custom_picture { get; set; }
 
         public Game()
         {
-
         }
+
         public Game(int m_id, int u_id, int s, string cp)
         {
-            match_id = m_id;
-            user_id = u_id;
-            size = s;
-            layout = layout_init();
-            duration = 0;
-            date_time = DateTime.Now;
-            score = 0;
-            result = false;
-            turns = 0;
-            custom_picture = cp;
+            this.Match_id = m_id;
+            this.User_id = u_id;
+            this.Size = s;
+            this.Layout = this.Layout_init();
+            this.Duration = 0;
+            this.Date_time = DateTime.Now;
+            this.Score = 0;
+            this.Result = false;
+            this.Turns = 0;
+            this.Custom_picture = cp;
         }
 
-        public string hash_layout()
+        public string Hash_layout()
         {
-            string hash = "";
-            for (int i = 0; i < size; i++)
+            string hash = string.Empty;
+            for (int i = 0; i < this.Size; i++)
             {
-                for (int j = 0; j < size; j++)
+                for (int j = 0; j < this.Size; j++)
                 {
-                    hash += Convert.ToChar(layout[i][j]);
+                    hash += Convert.ToChar(this.Layout[i][j]);
                 }
             }
+
             return hash;
         }
 
-        public void unhash(string s)
+        public void Unhash(string s)
         {
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < this.Size; i++)
             {
-                for (int j = 0; j < size; j++)
+                for (int j = 0; j < this.Size; j++)
                 {
-                    layout[i][j] = Convert.ToInt32(s[i * size + j]);
+                    this.Layout[i][j] = Convert.ToInt32(s[(i * this.Size) + j]);
                 }
             }
         }
 
-        private List<List<int>> layout_init()
+        private List<List<int>> Layout_init()
         {
             List<List<int>> init_layout = new List<List<int>>();
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < this.Size; i++)
             {
                 init_layout.Add(new List<int>());
             }
+
             List<int> l = new List<int>();
-            for (int i = 0; i < size * size; i++)
+            for (int i = 0; i < this.Size * this.Size; i++)
             {
                 l.Add(i);
             }
+
             Random rnd = new Random();
             l = l.OrderBy(x => rnd.Next()).ToList();
-            while (!solvable(l))
+            while (!this.Solvable(l))
             {
                 l = l.OrderBy(x => rnd.Next()).ToList();
             }
-            for (int i = 0; i < size; i++)
+
+            for (int i = 0; i < this.Size; i++)
             {
-                for (int j = 0; j < size; j++)
+                for (int j = 0; j < this.Size; j++)
                 {
-                    int idx = i * size + j;
+                    int idx = (i * this.Size) + j;
                     init_layout[i].Add(l[idx]);
                 }
             }
+
             return init_layout;
         }
-        private bool solvable(List<int> l)
+
+        private bool Solvable(List<int> l)
         {
             int inversions = 0;
-            for (int i = 0; i < size*size; i++)
+            for (int i = 0; i < this.Size * this.Size; i++)
             {
                 if (l[i] != 0)
                 {
@@ -114,28 +129,30 @@ namespace BLL
                         }
                     }
                 }
-                if(l[i] == 0)
+
+                if (l[i] == 0)
                 {
-                    inversions += 1 + i / size;
+                    inversions += 1 + (i / this.Size);
                 }
             }
+
             return (inversions & 1) == 0;
         }
 
         public bool solved()
         {
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < Size; i++)
             {
-                for (int j = 0; j < size; j++)
+                for (int j = 0; j < Size; j++)
                 {
-                    if(i != size - 1 || j != size - 1)
+                    if(i != Size - 1 || j != Size - 1)
                     {
-                        if (i* size + j + 1 != layout[i][j])
+                        if (i* Size + j + 1 != Layout[i][j])
                             return false;
                     }
                     else
                     {
-                        return layout[i][j] == 0;
+                        return Layout[i][j] == 0;
                     }
                 }
             }
@@ -143,29 +160,29 @@ namespace BLL
         }
         public void move(int x, int y)
         {
-            if(x>0 && layout[x-1][y] == 0)
+            if(x>0 && Layout[x-1][y] == 0)
             {
-                layout[x - 1][y] = layout[x][y];
-                layout[x][y] = 0;
-                turns++;
+                Layout[x - 1][y] = Layout[x][y];
+                Layout[x][y] = 0;
+                Turns++;
             }
-            else if (x < size - 1 && layout[x + 1][y] == 0)
+            else if (x < Size - 1 && Layout[x + 1][y] == 0)
             {
-                layout[x + 1][y] = layout[x][y];
-                layout[x][y] = 0;
-                turns++;
+                Layout[x + 1][y] = Layout[x][y];
+                Layout[x][y] = 0;
+                Turns++;
             }
-            else if (y > 0 && layout[x][y - 1] == 0)
+            else if (y > 0 && Layout[x][y - 1] == 0)
             {
-                layout[x][y - 1] = layout[x][y];
-                layout[x][y] = 0;
-                turns++;
+                Layout[x][y - 1] = Layout[x][y];
+                Layout[x][y] = 0;
+                Turns++;
             }
-            else if (y < size - 1 && layout[x][y + 1] == 0)
+            else if (y < Size - 1 && Layout[x][y + 1] == 0)
             {
-                layout[x][y + 1] = layout[x][y];
-                layout[x][y] = 0;
-                turns++;
+                Layout[x][y + 1] = Layout[x][y];
+                Layout[x][y] = 0;
+                Turns++;
             }
         }
         public void move(Moves m)
@@ -192,22 +209,22 @@ namespace BLL
                 y = 0;
             }
             if (moveTo(x, y))
-                turns++;
+                Turns++;
         }
         private bool moveTo(int x, int y)
         {
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < Size; i++)
             {
-                for (int j = 0; j < size; j++)
+                for (int j = 0; j < Size; j++)
                 {
-                    if(layout[i][j] == 0)
+                    if(Layout[i][j] == 0)
                     {
                         int xTo = i + y;
                         int yTo = j + x;
-                        if(xTo >= 0 && xTo < size && yTo >= 0 && yTo < size)
+                        if(xTo >= 0 && xTo < Size && yTo >= 0 && yTo < Size)
                         {
-                            layout[i][j] = layout[xTo][yTo];
-                            layout[xTo][yTo] = 0;
+                            Layout[i][j] = Layout[xTo][yTo];
+                            Layout[xTo][yTo] = 0;
                             return true;
                         }
                         return false;
@@ -219,16 +236,16 @@ namespace BLL
         public void print()
         {
             Console.Clear();
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < Size; i++)
             {
-                for (int j = 0; j < size; j++)
+                for (int j = 0; j < Size; j++)
                 {
-                    Console.Write(layout[i][j]);
+                    Console.Write(Layout[i][j]);
                     Console.Write('\t');
                 }
                 Console.WriteLine();
             }
-            Console.WriteLine($"turns: {turns}");
+            Console.WriteLine($"turns: {Turns}");
         }
     }
     class program
