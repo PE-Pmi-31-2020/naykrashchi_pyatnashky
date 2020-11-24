@@ -139,78 +139,87 @@ namespace BLL
             return (inversions & 1) == 0;
         }
 
-        public bool solved()
+        public bool Solved()
         {
-            for (int i = 0; i < Size; i++)
+            for (int i = 0; i < this.Size; i++)
             {
-                for (int j = 0; j < Size; j++)
+                for (int j = 0; j < this.Size; j++)
                 {
-                    if(i != Size - 1 || j != Size - 1)
+                    if (i != this.Size - 1 || j != this.Size - 1)
                     {
-                        if (i* Size + j + 1 != Layout[i][j])
+                        if ((i * this.Size) + j + 1 != this.Layout[i][j])
+                        {
                             return false;
+                        }
                     }
                     else
                     {
-                        return Layout[i][j] == 0;
+                        return this.Layout[i][j] == 0;
                     }
                 }
             }
+
             return true;
         }
-        public void move(int x, int y)
+
+        public void Move(int x, int y)
         {
-            if(x>0 && Layout[x-1][y] == 0)
+            if (x > 0 && this.Layout[x - 1][y] == 0)
             {
-                Layout[x - 1][y] = Layout[x][y];
-                Layout[x][y] = 0;
-                Turns++;
+                this.Layout[x - 1][y] = this.Layout[x][y];
+                this.Layout[x][y] = 0;
+                this.Turns++;
             }
-            else if (x < Size - 1 && Layout[x + 1][y] == 0)
+            else if (x < this.Size - 1 && this.Layout[x + 1][y] == 0)
             {
-                Layout[x + 1][y] = Layout[x][y];
-                Layout[x][y] = 0;
-                Turns++;
+                this.Layout[x + 1][y] = this.Layout[x][y];
+                this.Layout[x][y] = 0;
+                this.Turns++;
             }
-            else if (y > 0 && Layout[x][y - 1] == 0)
+            else if (y > 0 && this.Layout[x][y - 1] == 0)
             {
-                Layout[x][y - 1] = Layout[x][y];
-                Layout[x][y] = 0;
-                Turns++;
+                this.Layout[x][y - 1] = this.Layout[x][y];
+                this.Layout[x][y] = 0;
+                this.Turns++;
             }
-            else if (y < Size - 1 && Layout[x][y + 1] == 0)
+            else if (y < this.Size - 1 && this.Layout[x][y + 1] == 0)
             {
-                Layout[x][y + 1] = Layout[x][y];
-                Layout[x][y] = 0;
-                Turns++;
+                this.Layout[x][y + 1] = this.Layout[x][y];
+                this.Layout[x][y] = 0;
+                this.Turns++;
             }
         }
-        public void move(Moves m)
+
+        public void Move(Moves m)
         {
             int x = 0, y = 0;
-            if(m == Moves.Up)
+            if (m == Moves.Up)
             {
                 x = 0;
                 y = 1;
             }
-            if (m == Moves.Left)
+            else if (m == Moves.Left)
             {
                 x = 1;
                 y = 0;
             }
-            if (m == Moves.Down)
+            else if (m == Moves.Down)
             {
                 x = 0;
                 y = -1;
             }
-            if (m == Moves.Right)
+            else if (m == Moves.Right)
             {
                 x = -1;
                 y = 0;
             }
-            if (moveTo(x, y))
-                Turns++;
+
+            if (this.moveTo(x, y))
+            {
+                this.Turns++;
+            }
         }
+
         private bool moveTo(int x, int y)
         {
             for (int i = 0; i < Size; i++)
@@ -253,23 +262,23 @@ namespace BLL
         static void Main(string[] args)
         {
             Game g = new Game(1,1,4,"s");
-            while(!g.solved())
+            while(!g.Solved())
             {
                 g.print();
                 var ch = Console.ReadKey(false).Key;
                 switch (ch)
                 {
                     case ConsoleKey.UpArrow:
-                        g.move(Moves.Up);
+                        g.Move(Moves.Up);
                         break;
                     case ConsoleKey.DownArrow:
-                        g.move(Moves.Down);
+                        g.Move(Moves.Down);
                         break;
                     case ConsoleKey.LeftArrow:
-                        g.move(Moves.Left);
+                        g.Move(Moves.Left);
                         break;
                     case ConsoleKey.RightArrow:
-                        g.move(Moves.Right);
+                        g.Move(Moves.Right);
                         break;
                 }
             }
