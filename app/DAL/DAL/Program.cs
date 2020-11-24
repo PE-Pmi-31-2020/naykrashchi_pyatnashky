@@ -2,7 +2,7 @@
 
 namespace DAL
 {
-    class Program
+    class DBManager
     {
         static void Main(string[] args)
         {
