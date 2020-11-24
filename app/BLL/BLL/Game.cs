@@ -340,34 +340,41 @@ namespace BLL
             return (inversions & 1) == 0;
         }
 
-        // public class Program
-        // {
-        //    public static void Main(string[] args)
-        //    {
-        //        Game g = new Game(1, 1, 4, "s");
-        //        while (!g.Solved())
-        //        {
-        //            g.Print();
-        //            var ch = Console.ReadKey(false).Key;
-        //            switch (ch)
-        //            {
-        //                case ConsoleKey.UpArrow:
-        //                    g.Move(Moves.Up);
-        //                    break;
-        //                case ConsoleKey.DownArrow:
-        //                    g.Move(Moves.Down);
-        //                    break;
-        //                case ConsoleKey.LeftArrow:
-        //                    g.Move(Moves.Left);
-        //                    break;
-        //                case ConsoleKey.RightArrow:
-        //                    g.Move(Moves.Right);
-        //                    break;
-        //            }
-        //        }
+        /// <summary>
+        /// program for testing.
+        /// </summary>
+        public class Program
+        {
+            /// <summary>
+            /// main to test this project separatly.
+            /// </summary>
+            /// <param name="args">args.</param>
+            public static void Main(string[] args)
+            {
+                Game g = new Game(1, 1, 4, "s");
+                while (!g.Solved())
+                {
+                    g.Print();
+                    var ch = Console.ReadKey(false).Key;
+                    switch (ch)
+                    {
+                        case ConsoleKey.UpArrow:
+                            g.Move(Moves.Up);
+                            break;
+                        case ConsoleKey.DownArrow:
+                            g.Move(Moves.Down);
+                            break;
+                        case ConsoleKey.LeftArrow:
+                            g.Move(Moves.Left);
+                            break;
+                        case ConsoleKey.RightArrow:
+                            g.Move(Moves.Right);
+                            break;
+                    }
+                }
 
-        // Console.WriteLine("SOLVED!");
-        //    }
-        // }
+                Console.WriteLine("SOLVED!");
+            }
+        }
     }
 }
