@@ -25,7 +25,7 @@ namespace DAL
             db.SaveChanges();
         }
 
-        static bool LogIn(string login, string password)
+        static int LogIn(string login, string password)
         {
             User user = (from users in db.Users
                          where users.Login == login &&
@@ -33,17 +33,26 @@ namespace DAL
                          select users).FirstOrDefault();
             if (user != null)
             {
-                return true;
+                return user.UserId;
             }
-            return false;
+            return -1;
         }
 
-        static List<Match> GetUserMatches(int user_id)
+        static List<Match> GetUserCompletedMatches(int user_id)
         {
             return (from usermatches in db.Matches
-                    where usermatches.UserId == user_id
+                    where usermatches.UserId == user_id &&
+                    usermatches.Result == true
                     select usermatches).ToList();
         }
+
+        static List<Match> GetUserUnfinishedMatches(int user_id)
+        {
+            return (from usermatches in db.Matches
+                    where usermatches.UserId == user_id &&
+                    usermatches.Result == false
+                    select usermatches).ToList();
+        }   
 
         static Match GetMatch(int match_id)
         {
