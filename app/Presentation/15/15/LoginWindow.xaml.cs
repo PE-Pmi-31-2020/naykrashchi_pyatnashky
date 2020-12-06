@@ -17,6 +17,7 @@ namespace Fifteens
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
     using System.Windows.Shapes;
+    using DAL;
 
     /// <summary>
     /// Interaction logic for LoginWindow.xaml.
@@ -29,10 +30,64 @@ namespace Fifteens
         public LoginWindow()
         {
             this.InitializeComponent();
-            this.LogInButton.Click += this.FakeLogin;
+            if (App.Current.Properties.Contains(AppPropertyKeys.Login))
+            {
+                this.GoToMainWindow();
+            }
+
+            this.LogInButton.Click += this.Login;
+            this.SignUpButton.Click += this.SignUp;
         }
 
-        private void FakeLogin(object sender, RoutedEventArgs e)
+        private void Login(object sender, RoutedEventArgs e)
+        {
+            int playerID;
+            string login = this.LoginInput.Text.Trim();
+            string password = this.PasswordInput.Password;
+            bool successfullyLogged = DBManager.LogIn(login, password);
+            if (successfullyLogged)
+            {
+                this.SaveRememberMeValue();
+                this.StoreUserData(login, password);
+                this.GoToMainWindow();
+            }
+            else
+            {
+                MessageBox.Show("Wrong login or password");
+            }
+        }
+
+        private void SignUp(object sender, RoutedEventArgs e)
+        {
+            int playerID;
+            string login = this.LoginInput.Text.Trim();
+            string password = this.PasswordInput.Password;
+            bool successfullySignedUp = true;
+            DBManager.AddUser(login, password);
+            if (successfullySignedUp)
+            {
+                this.SaveRememberMeValue();
+                this.StoreUserData(login, password);
+                this.GoToMainWindow();
+            }
+            else
+            {
+                MessageBox.Show("Login already exists");
+            }
+        }
+
+        private void StoreUserData(string login, string password)
+        {
+            App.Current.Properties[AppPropertyKeys.Login] = login;
+            App.Current.Properties[AppPropertyKeys.Password] = password;
+        }
+
+        private void SaveRememberMeValue()
+        {
+            App.Current.Properties[AppPropertyKeys.RememberMe] = this.RememberMeCheck.IsChecked;
+        }
+
+        private void GoToMainWindow()
         {
             MainWindow window = new MainWindow();
             window.Show();

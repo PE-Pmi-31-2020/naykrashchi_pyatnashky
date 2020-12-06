@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Fifteens"
         mc:Ignorable="d"
-        Title="MatchHistoryWindow" Height="450" Width="800">
+        Title="MatchHistoryWindow" Height="450" Width="800"
+        WindowStartupLocation="Manual" 
+        Left="0" Top="0">
     <Window.Resources>
         <DataTemplate x:Key="MatchHistoryLineTemplate">
             <StackPanel Orientation="Horizontal">

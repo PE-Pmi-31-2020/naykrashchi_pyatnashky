@@ -27,14 +27,27 @@ namespace Fifteens
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
         /// </summary>
+        /// <param name="login"> player's login. </param>
+        /// <param name="password"> player's password. </param>
         public MainWindow()
         {
             this.InitializeComponent();
+            this.NicknameLabel.Content = App.Current.Properties[AppPropertyKeys.Login];
             this.ManageImagesButton.Click += this.FakeManageImages;
             this.PlayButton.Click += this.FakePlay;
             this.ExitButton.Click += this.OnClickExit;
             this.MatchHistoryButton.Click += this.OnClickMatchHistory;
         }
+
+        /// <summary>
+        /// Gets login.
+        /// </summary>
+        public string Login { get; }
+
+        /// <summary>
+        /// Gets password.
+        /// </summary>
+        public string Password { get; }
 
         private void FakePlay(object sender, RoutedEventArgs e)
         {

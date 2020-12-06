@@ -16,6 +16,7 @@ namespace Fifteens
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
     using System.Windows.Shapes;
+    using DAL;
 
     /// <summary>
     /// Interaction logic for MatchHistoryWindow.xaml.
@@ -30,27 +31,15 @@ namespace Fifteens
             this.InitializeComponent();
             this.BackButton.Click += this.OnClickBack;
 
-            // here we will get data from database in future.
-            this.Lines = new ObservableCollection<MatchHistoryLine>()
+            this.Lines = new ObservableCollection<MatchHistoryLine>();
+
+            var matches = DBManager.GetUserMatches(25);
+            foreach (var katka in matches)
             {
-                new MatchHistoryLine(),
-                new MatchHistoryLine(),
-                new MatchHistoryLine(),
-                new MatchHistoryLine(),
-                new MatchHistoryLine(),
-                new MatchHistoryLine(),
-                new MatchHistoryLine(),
-                new MatchHistoryLine(),
-                new MatchHistoryLine(),
-                new MatchHistoryLine(),
-                new MatchHistoryLine(),
-                new MatchHistoryLine(),
-                new MatchHistoryLine(),
-                new MatchHistoryLine(),
-                new MatchHistoryLine(),
-                new MatchHistoryLine(),
-                new MatchHistoryLine(),
-            };
+                this.Lines.Add(new MatchHistoryLine(katka.Duration, katka.Score, katka.Turns, katka.DateTime));
+            }
+
+            // here we will get data from database in future.
             this.MatchesList.ItemsSource = this.Lines;
         }
 

@@ -9,23 +9,23 @@ using System.Collections.Generic;
 
 namespace DAL
 {
-    class DBManager
+    public class DBManager
     {
         private static fifteens_databaseContext db = new fifteens_databaseContext();
 
-        static void AddUser(string login, string password)
+        public static void AddUser(string login, string password)
         {
             db.Users.Add(new User { Login = login, Password = password });
             db.SaveChanges();
         }
 
-        static void AddMatch(Match match)
+        public static void AddMatch(Match match)
         {
             db.Matches.Add(match);
             db.SaveChanges();
         }
 
-        static bool LogIn(string login, string password)
+        public static bool LogIn(string login, string password)
         {
             User user = (from users in db.Users
                          where users.Login == login &&
@@ -38,14 +38,14 @@ namespace DAL
             return false;
         }
 
-        static List<Match> GetUserMatches(int user_id)
+        public static List<Match> GetUserMatches(int user_id)
         {
             return (from usermatches in db.Matches
                     where usermatches.UserId == user_id
                     select usermatches).ToList();
         }
 
-        static Match GetMatch(int match_id)
+        public static Match GetMatch(int match_id)
         {
             return (from usermatches in db.Matches
                     where usermatches.Result == false &&
@@ -53,10 +53,9 @@ namespace DAL
                     select usermatches).FirstOrDefault();
         }
 
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
 
-            
         }
     }
 }

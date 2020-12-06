@@ -8,14 +8,68 @@ namespace Fifteens
     using System.Collections.Generic;
     using System.Configuration;
     using System.Data;
+    using System.IO;
+    using System.IO.IsolatedStorage;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Windows;
+
+    public enum AppPropertyKeys
+    {
+        RememberMe,
+        Login,
+        Password,
+    }
 
     /// <summary>
     /// Interaction logic for App.xaml.
     /// </summary>
     public partial class App : Application
     {
+        #pragma warning disable
+        protected override void OnExit(ExitEventArgs e)
+        {
+            try
+            {
+                IsolatedStorageFile isolatedStorage = IsolatedStorageFile.GetUserStoreForAssembly();
+                StreamWriter srWriter = new StreamWriter(new IsolatedStorageFileStream("remember_me", FileMode.Create, isolatedStorage));
+
+                if ((bool)App.Current.Properties[AppPropertyKeys.RememberMe] && App.Current.Properties.Contains(AppPropertyKeys.Login))
+                {
+                    srWriter.WriteLine(App.Current.Properties[AppPropertyKeys.Login].ToString() + "\n" + App.Current.Properties[AppPropertyKeys.Password].ToString());
+                }
+
+                srWriter.Flush();
+                srWriter.Close();
+            }
+            catch (System.Security.SecurityException sx)
+            {
+                MessageBox.Show(sx.Message);
+                throw;
+            }
+        }
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            try
+            {
+                IsolatedStorageFile isolatedStorage = IsolatedStorageFile.GetUserStoreForAssembly();
+                StreamReader srReader = new StreamReader(new IsolatedStorageFileStream("remember_me", FileMode.OpenOrCreate, isolatedStorage));
+
+                if (!srReader.EndOfStream)
+                {
+                    string[] userData = srReader.ReadToEnd().Split('\n');
+                    App.Current.Properties[AppPropertyKeys.Login] = userData[0];
+                    App.Current.Properties[AppPropertyKeys.Password] = userData[1];
+                    App.Current.Properties[AppPropertyKeys.RememberMe] = true;
+                }
+                srReader.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                throw;
+            }
+        }
     }
 }
