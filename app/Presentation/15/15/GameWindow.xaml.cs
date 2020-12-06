@@ -62,7 +62,11 @@ namespace Fifteens
                 {
                     if (this.GameField[i, j] == senderButton)
                     {
-                        this.Match.Move(j, i);
+                        this.Match.Move(i, j);
+                        if (this.Match.Solved())
+                        {
+                            MessageBox.Show("gg! ez +25(20)");
+                        }
                         break;
                     }
                 }
