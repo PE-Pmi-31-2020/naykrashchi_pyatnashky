@@ -13,10 +13,12 @@ namespace DAL
     {
         private static fifteens_databaseContext db = new fifteens_databaseContext();
 
-        public static void AddUser(string login, string password)
+        public static int AddUser(string login, string password)
         {
-            db.Users.Add(new User { Login = login, Password = password });
+            User u = new User { Login = login, Password = password };
+            db.Users.Add(u);
             db.SaveChanges();
+            return u.UserId;
         }
 
         public static void AddMatch(Match match)
