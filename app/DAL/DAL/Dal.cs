@@ -20,7 +20,11 @@ namespace DAL
             db.SaveChanges();
             return u.UserId;
         }
-
+        public static void DeleteUser(int id)
+        {
+            db.Users.Remove(db.Users.Find(id));
+            db.SaveChanges();
+        }
         public static void AddMatch(Match match)
         {
             db.Matches.Add(match);
@@ -40,10 +44,11 @@ namespace DAL
             return false;
         }
 
-        public static List<Match> GetUserMatches(int user_id)
+        public static List<Match> GetUserMatches(int user_id, bool result)
         {
             return (from usermatches in db.Matches
-                    where usermatches.UserId == user_id
+                    where usermatches.UserId == user_id &&
+                    usermatches.Result == result
                     select usermatches).ToList();
         }
 
