@@ -41,14 +41,14 @@ namespace Fifteens
 
         private void Login(object sender, RoutedEventArgs e)
         {
-            int playerID;
+            int userID = -1;
             string login = this.LoginInput.Text.Trim();
             string password = this.PasswordInput.Password;
-            bool successfullyLogged = DBManager.LogIn(login, password);
+            bool successfullyLogged = DBManager.LogIn(login, password, ref userID);
             if (successfullyLogged)
             {
                 this.SaveRememberMeValue();
-                this.StoreUserData(login, password);
+                this.StoreUserData(userID, login, password);
                 this.GoToMainWindow();
             }
             else
@@ -59,25 +59,31 @@ namespace Fifteens
 
         private void SignUp(object sender, RoutedEventArgs e)
         {
-            int playerID;
             string login = this.LoginInput.Text.Trim();
             string password = this.PasswordInput.Password;
-            bool successfullySignedUp = true;
-            DBManager.AddUser(login, password);
-            if (successfullySignedUp)
+            try
             {
+                int userID = DBManager.AddUser(login, password);
                 this.SaveRememberMeValue();
-                this.StoreUserData(login, password);
+                this.StoreUserData(userID, login, password);
                 this.GoToMainWindow();
             }
-            else
+            catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
             {
-                MessageBox.Show("Login already exists");
+                if (ex.InnerException.Message.Split(":")[0] == "23505")
+                {
+                    MessageBox.Show("Login already taken");
+                }
+                else
+                {
+                    MessageBox.Show(ex.InnerException.Message);
+                }
             }
         }
 
-        private void StoreUserData(string login, string password)
+        private void StoreUserData(int userID, string login, string password)
         {
+            App.Current.Properties[AppPropertyKeys.UserID] = userID;
             App.Current.Properties[AppPropertyKeys.Login] = login;
             App.Current.Properties[AppPropertyKeys.Password] = password;
         }

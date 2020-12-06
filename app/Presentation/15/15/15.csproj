@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\BLL\BLL\BLL.csproj" />
     <ProjectReference Include="..\..\..\DAL\DAL\DAL.csproj" />
   </ItemGroup>
 

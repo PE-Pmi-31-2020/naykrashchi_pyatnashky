@@ -33,7 +33,7 @@ namespace Fifteens
 
             this.Lines = new ObservableCollection<MatchHistoryLine>();
 
-            var matches = DBManager.GetUserMatches(25);
+            var matches = DBManager.GetUserMatches((int)App.Current.Properties[AppPropertyKeys.UserID], true);
             foreach (var katka in matches)
             {
                 this.Lines.Add(new MatchHistoryLine(katka.Duration, katka.Score, katka.Turns, katka.DateTime));

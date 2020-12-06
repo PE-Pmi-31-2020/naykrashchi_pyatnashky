@@ -19,6 +19,7 @@ namespace Fifteens
         RememberMe,
         Login,
         Password,
+        UserID,
     }
 
     /// <summary>
@@ -36,7 +37,9 @@ namespace Fifteens
 
                 if ((bool)App.Current.Properties[AppPropertyKeys.RememberMe] && App.Current.Properties.Contains(AppPropertyKeys.Login))
                 {
-                    srWriter.WriteLine(App.Current.Properties[AppPropertyKeys.Login].ToString() + "\n" + App.Current.Properties[AppPropertyKeys.Password].ToString());
+                    srWriter.WriteLine(App.Current.Properties[AppPropertyKeys.UserID].ToString() + "\n" + 
+                                        App.Current.Properties[AppPropertyKeys.Login].ToString() + "\n" +
+                                        App.Current.Properties[AppPropertyKeys.Password].ToString());
                 }
 
                 srWriter.Flush();
@@ -59,8 +62,9 @@ namespace Fifteens
                 if (!srReader.EndOfStream)
                 {
                     string[] userData = srReader.ReadToEnd().Split('\n');
-                    App.Current.Properties[AppPropertyKeys.Login] = userData[0];
-                    App.Current.Properties[AppPropertyKeys.Password] = userData[1];
+                    App.Current.Properties[AppPropertyKeys.UserID] = Convert.ToInt32(userData[0]);
+                    App.Current.Properties[AppPropertyKeys.Login] = userData[1];
+                    App.Current.Properties[AppPropertyKeys.Password] = userData[2];
                     App.Current.Properties[AppPropertyKeys.RememberMe] = true;
                 }
                 srReader.Close();

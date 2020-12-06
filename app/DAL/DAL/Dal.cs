@@ -31,7 +31,7 @@ namespace DAL
             db.SaveChanges();
         }
 
-        public static bool LogIn(string login, string password)
+        public static bool LogIn(string login, string password, ref int user_id)
         {
             User user = (from users in db.Users
                          where users.Login == login &&
@@ -39,6 +39,7 @@ namespace DAL
                          select users).FirstOrDefault();
             if (user != null)
             {
+                user_id = user.UserId;
                 return true;
             }
             return false;

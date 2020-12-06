@@ -9,7 +9,7 @@
     <Grid>
         <DockPanel Background="{StaticResource BackgroundBrush}" LastChildFill="True">
             <Button x:Name="BackButton" DockPanel.Dock="Top" Content="Back" MinWidth="50" Margin="10" HorizontalAlignment="Left"/>
-            <WrapPanel DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Center" MaxHeight="256" MaxWidth="256">
+            <WrapPanel x:Name="FieldContainer" DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Center" MaxHeight="225" MaxWidth="400">
             </WrapPanel>
         </DockPanel>
     </Grid>

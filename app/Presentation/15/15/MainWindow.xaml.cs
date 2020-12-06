@@ -18,6 +18,7 @@ namespace Fifteens
     using System.Windows.Media.Imaging;
     using System.Windows.Navigation;
     using System.Windows.Shapes;
+    using DAL;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml.
@@ -33,10 +34,12 @@ namespace Fifteens
         {
             this.InitializeComponent();
             this.NicknameLabel.Content = App.Current.Properties[AppPropertyKeys.Login];
-            this.ManageImagesButton.Click += this.FakeManageImages;
+            this.ManageImagesButton.Click += this.OnClickManageImages;
             this.PlayButton.Click += this.FakePlay;
             this.ExitButton.Click += this.OnClickExit;
             this.MatchHistoryButton.Click += this.OnClickMatchHistory;
+            this.LogOutButton.Click += this.OnClickLogOut;
+            this.DeleteAccButton.Click += this.OnClickDeleteAcc;
         }
 
         /// <summary>
@@ -56,7 +59,7 @@ namespace Fifteens
             this.Close();
         }
 
-        private void FakeManageImages(object sender, RoutedEventArgs e)
+        private void OnClickManageImages(object sender, RoutedEventArgs e)
         {
             ManageImagesWindow window = new ManageImagesWindow();
             window.Show();
@@ -73,6 +76,27 @@ namespace Fifteens
         private void OnClickExit(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void OnClickLogOut(object sender, RoutedEventArgs e)
+        {
+            App.Current.Properties.Remove(AppPropertyKeys.UserID);
+            App.Current.Properties.Remove(AppPropertyKeys.Login);
+            App.Current.Properties.Remove(AppPropertyKeys.Password);
+            App.Current.Properties.Remove(AppPropertyKeys.RememberMe);
+            LoginWindow window = new LoginWindow();
+            window.Show();
+            this.Close();
+        }
+
+        private void OnClickDeleteAcc(object sender, RoutedEventArgs e)
+        {
+            var res = MessageBox.Show("Do you want to delete this account permanently?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            if (res == MessageBoxResult.Yes)
+            {
+                DBManager.DeleteUser((int)App.Current.Properties[AppPropertyKeys.UserID]);
+                this.OnClickLogOut(sender, e);
+            }
         }
     }
 }
