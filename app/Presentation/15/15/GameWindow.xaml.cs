@@ -65,7 +65,7 @@ namespace Fifteens
                         this.Match.Move(i, j);
                         if (this.Match.Solved())
                         {
-                            MessageBox.Show("gg! ez +25(20)");
+                            MessageBox.Show("gg! ez +25(20)");  
                         }
                         break;
                     }
@@ -92,7 +92,7 @@ namespace Fifteens
             double buttonWidth = this.Width / 2 / this.GameSize;
 
             this.GameField = new Button[this.GameSize, this.GameSize];
-            this.Match = new Game(123, (int)App.Current.Properties[AppPropertyKeys.UserID], this.GameSize, "pusto-");
+            this.Match = new Game(this.GameSize);
 
             for (int i = 0; i < this.GameSize; i++)
             {

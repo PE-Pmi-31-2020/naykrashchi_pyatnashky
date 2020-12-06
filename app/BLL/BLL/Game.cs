@@ -40,49 +40,24 @@ namespace BLL
         /// <param name="user_id">user id.</param>
         /// <param name="size"> size.</param>
         /// <param name="custom_picture"> custom picture.</param>
-        public Game(int match_id, int user_id, int size, string custom_picture)
+        public Game(int size)
         {
-            this.Match_id = match_id;
-            this.User_id = user_id;
             this.Size = size;
             this.Layout = this.Layout_init();
-            this.Duration = 0;
-            this.Date_time = DateTime.Now;
-            this.Score = 0;
-            this.Result = false;
             this.Turns = 0;
-            this.Custom_picture = custom_picture;
         }
 
         /// <summary>
-        /// Gets or sets id of a match.
+        /// Initializes a new instance of the <see cref="Game"/> class.
         /// </summary>
-        public int Match_id { get; set; }
-
-        /// <summary>
-        /// Gets or sets id of an user.
-        /// </summary>
-        public int User_id { get; set; }
-
-        /// <summary>
-        /// Gets or sets duration.
-        /// </summary>
-        public int Duration { get; set; }
-
-        /// <summary>
-        /// Gets or sets date and time of start.
-        /// </summary>
-        public DateTime Date_time { get; set; }
-
-        /// <summary>
-        /// Gets or sets score.
-        /// </summary>
-        public int Score { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether gets or sets if match is finished.
-        /// </summary>
-        public bool Result { get; set; }
+        /// <param name="hash">hashed layout.</param>
+        /// <param name="turns">turns.</param>
+        public Game(string hash, int turns)
+        {
+            this.Size = (int)Math.Sqrt(hash.Length);
+            this.Unhash(hash);
+            this.Turns = turns;
+        }
 
         /// <summary>
         /// Gets or sets size of a board.
@@ -98,11 +73,6 @@ namespace BLL
         /// Gets or sets number of turns.
         /// </summary>
         public int Turns { get; set; }
-
-        /// <summary>
-        /// Gets or sets path to picture.
-        /// </summary>
-        public string Custom_picture { get; set; }
 
         /// <summary>
         /// hash layout as a string.
@@ -351,7 +321,7 @@ namespace BLL
             /// <param name="args">args.</param>
             public static void Main(string[] args)
             {
-                Game g = new Game(1, 1, 4, "s");
+                Game g = new Game(4);
                 while (!g.Solved())
                 {
                     g.Print();
