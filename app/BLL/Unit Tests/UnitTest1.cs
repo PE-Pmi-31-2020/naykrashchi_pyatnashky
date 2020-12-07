@@ -165,11 +165,61 @@ namespace Unit_Tests
             if (x == 0)
             {
                 g.Move(x + 1, y);
+                x++;
             }
             string hash = g.Hash_layout();
             g.Move(x - 1, y);
-            g.Move(x + 1, y);
+            g.Move(x, y);
             Assert.AreEqual(hash, g.Hash_layout());
+        }
+
+
+        [TestMethod]
+        public void TestMouseMoveControl2()
+        {
+            Game g = new Game(4);
+            int x = -1;
+            int y = -1;
+            for (int i = 0; i < 4; i++)
+            {
+                if (x < 0)
+                {
+                    for (int j = 0; j < 4; j++)
+                    {
+                        if (g.Layout[i][j] == 0)
+                        {
+                            x = i;
+                            y = j;
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    break;
+                }
+            }
+            if (x == 0)
+            {
+                g.Move(x + 1, y);
+                x++;
+            }
+            string hash = g.Hash_layout();
+            g.Move(x - 1, y);
+            Assert.AreNotEqual(hash, g.Hash_layout());
+        }
+
+
+        [TestMethod]
+        public void TestSize()
+        {
+            bool ok = true;
+            for (int size = 4; size <= 6; size++)
+            {
+                Game g = new Game(size);
+                ok &= (g.Size == size);
+            }
+            Assert.IsTrue(ok);
         }
     }
 }
