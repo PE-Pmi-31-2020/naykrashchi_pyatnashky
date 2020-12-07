@@ -26,15 +26,35 @@ namespace Fifteens
     {
         private DispatcherTimer dispatcherTimer;
 
+        private int score;
+
+        private bool isFirstMove;
         /// <summary>
         /// Initializes a new instance of the <see cref="GameWindow"/> class.
         /// </summary>
-        public GameWindow()
+        public GameWindow(int gameSize)
         {
             this.InitializeComponent();
             this.BackButton.Click += this.OnClickBack;
+            this.SaveMatchButton.Click += this.OnClickSaveMatch;
+            this.isFirstMove = true;
             this.Duration = 0;
-            this.GameSize = 4;
+            this.GameSize = gameSize;
+            this.Match = new Game(this.GameSize);
+            this.InitGame();
+        }
+
+        public GameWindow(Match match)
+        {
+            this.InitializeComponent();
+            this.BackButton.Click += this.OnClickBack;
+            this.SaveMatchButton.Click += this.OnClickSaveMatch;
+            this.isFirstMove = true;
+            this.Duration = match.Duration.Value;
+            this.TimeLabel.Content = this.Duration;
+            this.GameSize = match.Size.Value;
+            this.Match = new Game(match.Layout, match.Turns.Value);
+            this.TurnsLabel.Content = "Turns: " + this.Match.Turns;
             this.InitGame();
         }
 
@@ -55,10 +75,29 @@ namespace Fifteens
             this.Close();
         }
 
+        private void OnClickSaveMatch(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult res = MessageBox.Show("Do you want to save game to finish it later?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (res == MessageBoxResult.Yes)
+            {
+                DBManager.AddMatch(new Match()
+                {
+                    UserId = (int)App.Current.Properties[AppPropertyKeys.UserID],
+                    Duration = this.Duration,
+                    DateTime = this.MatchStartDateTime,
+                    Result = false,
+                    Turns = this.Match.Turns,
+                    Size = this.GameSize,
+                    Layout = this.Match.Hash_layout(),
+                });
+            }
+        }
+
         private void OnClickFieldCell(object sender, RoutedEventArgs e)
         {
-            if (this.Match.Turns == 0)
+            if (this.isFirstMove)
             {
+                this.isFirstMove = false;
                 this.MatchStartDateTime = DateTime.Now;
                 this.dispatcherTimer = new DispatcherTimer();
                 this.dispatcherTimer.Tick += new EventHandler(this.UpdateDuration);
@@ -83,8 +122,10 @@ namespace Fifteens
             this.UpdateButtonNumbers();
             if (this.Match.Solved())
             {
+                this.dispatcherTimer.Stop();
+                this.score = Math.Max(1000000 - (this.Duration * this.Match.Turns), 0);
                 this.SaveMatch();
-                MessageBox.Show($"Your score: {1000000 - (this.Duration * this.Match.Turns)}", "Result");
+                MessageBox.Show($"Your score: {this.score}", "Result");
                 MainWindow window = new MainWindow();
                 window.Show();
                 this.Close();
@@ -93,14 +134,15 @@ namespace Fifteens
 
         private void SaveMatch()
         {
-            DAL.DBManager.AddMatch(new Match()
+            DBManager.AddMatch(new Match()
             {
                 UserId = (int)App.Current.Properties[AppPropertyKeys.UserID],
                 Duration = this.Duration,
                 DateTime = this.MatchStartDateTime,
-                Score = 1000000 - (this.Duration * this.Match.Turns),
+                Score = this.score,
                 Result = true,
                 Turns = this.Match.Turns,
+                Size = this.GameSize,
             });
         }
 
@@ -128,7 +170,6 @@ namespace Fifteens
             double buttonWidth = this.Width / 2 / this.GameSize;
 
             this.GameField = new Button[this.GameSize, this.GameSize];
-            this.Match = new Game(this.GameSize);
 
             for (int i = 0; i < this.GameSize; i++)
             {

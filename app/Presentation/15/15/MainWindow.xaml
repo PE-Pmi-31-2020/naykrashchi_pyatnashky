@@ -41,8 +41,8 @@
             <Label x:Name="NicknameLabel" DockPanel.Dock="Right" Content="TvoyaKisa69" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="7"></Label>
         </WrapPanel>
         <WrapPanel Orientation="Vertical" DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button x:Name="PlayButton" Margin="4" Content="Play"/>
-            <Button x:Name="UploadGameButton" Margin="4">Upload game</Button>
+            <Button x:Name="NewGameButton" Margin="4">New Game</Button>
+            <Button x:Name="ContinueGameButton" Margin="4">Continue game</Button>
             <Button x:Name="MatchHistoryButton" Margin="4">Match history</Button>
             <Button x:Name="ManageImagesButton" Margin="4">Manage images</Button>
             <Button x:Name="ExitButton" Margin="4">Exit</Button>

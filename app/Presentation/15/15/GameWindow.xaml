@@ -10,6 +10,7 @@
         <DockPanel Background="{StaticResource BackgroundBrush}" LastChildFill="True">
             <DockPanel DockPanel.Dock="Top">
                 <Button x:Name="BackButton" DockPanel.Dock="Left" Content="Back" MinWidth="50" Margin="10" HorizontalAlignment="Left"/>
+                <Button x:Name="SaveMatchButton" DockPanel.Dock="Left" Content="Save Match" MinWidth="50" Margin="10" HorizontalAlignment="Left"/>
                 <Label x:Name="TimeLabel" DockPanel.Dock="Right" Content="0" Margin="10" FontSize="16" HorizontalAlignment="Right"></Label>
                 <Label x:Name="TurnsLabel" DockPanel.Dock="Right" Content="Turns: 0" Margin="10" FontSize="16" HorizontalAlignment="Right"></Label>
             </DockPanel>
