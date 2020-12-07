@@ -292,7 +292,7 @@ namespace BLL
                 }
             }
 
-            return (inversions & 1) == 0;
+            return ((inversions + this.Size) & 1) == 0;
         }
 
         /// <summary>
