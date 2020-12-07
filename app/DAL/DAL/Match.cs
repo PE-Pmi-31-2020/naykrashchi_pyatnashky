@@ -46,7 +46,7 @@ namespace DAL
         /// <summary>
         /// Gets or sets hashed layout.
         /// </summary>
-        public long? Layout { get; set; }
+        public string Layout { get; set; }
 
         /// <summary>
         /// Gets or sets turns.
