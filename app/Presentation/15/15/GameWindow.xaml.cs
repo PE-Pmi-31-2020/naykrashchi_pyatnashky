@@ -34,6 +34,8 @@ namespace Fifteens
 
         private Dictionary<int, ImageBrush> imagePartsMap;
 
+        private int databaseMatchId;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GameWindow"/> class.
         /// </summary>
@@ -48,6 +50,7 @@ namespace Fifteens
             this.Match = new Game(this.GameSize);
             this.customImage = customImage;
             this.MatchStartDateTime = DateTime.Now;
+            this.databaseMatchId = -1;
             if (this.customImage)
             {
                 this.CropImage();
@@ -69,6 +72,7 @@ namespace Fifteens
             this.TurnsLabel.Content = "Turns: " + this.Match.Turns;
             this.customImage = match.CustomPicture == null ? false : true;
             this.MatchStartDateTime = DateTime.Now;
+            this.databaseMatchId = match.MatchId;
             if (this.customImage)
             {
                 App.Current.Properties[AppPropertyKeys.CustomImagePath] = match.CustomPicture;
@@ -98,8 +102,14 @@ namespace Fifteens
         private void OnClickSaveMatch(object sender, RoutedEventArgs e)
         {
             MessageBoxResult res = MessageBox.Show("Do you want to save game to finish it later?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
             if (res == MessageBoxResult.Yes)
             {
+                if (this.databaseMatchId != -1)
+                {
+                    DBManager.DeleteMatch(this.databaseMatchId);
+                }
+
                 Match katka = new Match()
                 {
                     UserId = (int)App.Current.Properties[AppPropertyKeys.UserID],
@@ -189,6 +199,11 @@ namespace Fifteens
 
         private void SaveMatch()
         {
+            if (this.databaseMatchId != -1)
+            {
+                DBManager.DeleteMatch(this.databaseMatchId);
+            }
+
             DBManager.AddMatch(new Match()
             {
                 UserId = (int)App.Current.Properties[AppPropertyKeys.UserID],
