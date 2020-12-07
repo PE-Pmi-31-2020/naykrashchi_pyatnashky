@@ -2,38 +2,61 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-#pragma warning disable
-using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
-
 #nullable disable
 
 namespace DAL
 {
-    public partial class fifteens_databaseContext : DbContext
+    using System;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata;
+
+    /// <summary>
+    /// Class for a database object.
+    /// </summary>
+    public partial class Fifteens_databaseContext : DbContext
     {
-        public fifteens_databaseContext()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Fifteens_databaseContext"/> class.
+        /// </summary>
+        public Fifteens_databaseContext()
         {
         }
 
-        public fifteens_databaseContext(DbContextOptions<fifteens_databaseContext> options)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Fifteens_databaseContext"/> class.
+        /// </summary>
+        /// <param name="options"> Options. </param>
+        public Fifteens_databaseContext(DbContextOptions<Fifteens_databaseContext> options)
             : base(options)
         {
         }
 
+        /// <summary>
+        /// Gets or sets property of Matches table.
+        /// </summary>
         public virtual DbSet<Match> Matches { get; set; }
+
+        /// <summary>
+        /// Gets or sets property of Users table.
+        /// </summary>
         public virtual DbSet<User> Users { get; set; }
 
+        /// <summary>
+        /// Configures the database.
+        /// </summary>
+        /// <param name="optionsBuilder">The type of options being requested.</param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=fifteens_database;Username=postgres;Password=555");
+                optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=fifteens_database;Username=postgres;Password=nyanlove17");
             }
         }
 
+        /// <summary>
+        /// Defines the model for the context being created.
+        /// </summary>
+        /// <param name="modelBuilder"> Instance of the ModelBuilder. </param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Match>(entity =>
@@ -88,7 +111,7 @@ namespace DAL
                     .HasColumnName("password");
             });
 
-            OnModelCreatingPartial(modelBuilder);
+            this.OnModelCreatingPartial(modelBuilder);
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

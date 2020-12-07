@@ -17,7 +17,7 @@ namespace DAL
     /// </summary>
     public class DBManager
     {
-        private static fifteens_databaseContext db = new fifteens_databaseContext();
+        private static Fifteens_databaseContext db = new Fifteens_databaseContext();
 
         /// <summary>
         /// Function to add user to the database.
@@ -151,7 +151,13 @@ namespace DAL
             return algorithm.ComputeHash(plainTextWithSaltBytes);
         }
 
-        public static bool CompareByteArrays(byte[] array1, byte[] array2)
+        /// <summary>
+        /// Compares arrays of bytes.
+        /// </summary>
+        /// <param name="array1">First array.</param>
+        /// <param name="array2">Second array.</param>
+        /// <returns>Bool variable of the arrays are equal.</returns>
+        private static bool CompareByteArrays(byte[] array1, byte[] array2)
         {
             if (array1.Length != array2.Length)
             {
