@@ -67,6 +67,12 @@ namespace Fifteens
             this.Match = new Game(match.Layout, match.Turns.Value);
             this.TurnsLabel.Content = "Turns: " + this.Match.Turns;
             this.customImage = match.CustomPicture == string.Empty ? false : true;
+            if (this.customImage)
+            {
+                App.Current.Properties[AppPropertyKeys.CustomImagePath] = match.CustomPicture;
+                this.CropImage();
+            }
+
             this.InitGame();
         }
 
@@ -92,7 +98,7 @@ namespace Fifteens
             MessageBoxResult res = MessageBox.Show("Do you want to save game to finish it later?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (res == MessageBoxResult.Yes)
             {
-                DBManager.AddMatch(new Match()
+                Match katka = new Match()
                 {
                     UserId = (int)App.Current.Properties[AppPropertyKeys.UserID],
                     Duration = this.Duration,
@@ -101,7 +107,13 @@ namespace Fifteens
                     Turns = this.Match.Turns,
                     Size = this.GameSize,
                     Layout = this.Match.Hash_layout(),
-                });
+                };
+                if (this.customImage)
+                {
+                    katka.CustomPicture = App.Current.Properties[AppPropertyKeys.CustomImagePath].ToString();
+                }
+
+                DBManager.AddMatch(katka);
                 MainWindow window = new MainWindow();
                 window.Show();
                 this.Close();
@@ -165,9 +177,6 @@ namespace Fifteens
                     croppedImage.Width = bitmap.PixelWidth / this.GameSize;
                     CroppedBitmap cb = new CroppedBitmap(bitmap, new Int32Rect((int)croppedImage.Width * j, (int)croppedImage.Height * i, (int)croppedImage.Width, (int)croppedImage.Height));
 
-                    // croppedImage.Height = this.Height / 2 / this.GameSize;
-                    // croppedImage.Width = this.Width / 2 / this.GameSize;
-                    // CroppedBitmap cb = new CroppedBitmap(bitmap, new Int32Rect((int)croppedImage.Width * j, (int)croppedImage.Height * i, (int)croppedImage.Width, (int)croppedImage.Height));
                     croppedImage.Source = cb;
                     croppedImage.Stretch = Stretch.Fill;
                     croppedImage.StretchDirection = StretchDirection.Both;
@@ -228,15 +237,6 @@ namespace Fifteens
             double buttonWidth = this.Width / 2 / this.GameSize;
 
             this.GameField = new Button[this.GameSize, this.GameSize];
-            for (int k = 0; k < this.GameSize; k++)
-            {
-                for (int m = 0; m < this.GameSize; m++)
-                {
-                    this.Match.Layout[k][m] = (this.GameSize * k) + m + 1;
-                }
-            }
-
-            this.Match.Layout[this.GameSize - 1][this.GameSize - 1] = 0;
             for (int i = 0; i < this.GameSize; i++)
             {
                 for (int j = 0; j < this.GameSize; j++)

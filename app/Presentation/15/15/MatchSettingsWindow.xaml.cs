@@ -23,7 +23,7 @@ namespace Fifteens
     /// </summary>
     public partial class MatchSettingsWindow : Window
     {
-        bool customImage;
+        private bool customImage;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MatchSettingsWindow"/> class.
@@ -33,7 +33,15 @@ namespace Fifteens
             this.InitializeComponent();
             this.OKButton.Click += this.OnClickOKButton;
             this.ChooseCustomImage.Click += this.OnClickChooseCustomImage;
+            this.BackButton.Click += this.OnClickBack;
             this.customImage = false;
+        }
+
+        private void OnClickBack(object sender, RoutedEventArgs e)
+        {
+            MainWindow window = new MainWindow();
+            window.Show();
+            this.Close();
         }
 
         private void OnClickOKButton(object sender, RoutedEventArgs e)
