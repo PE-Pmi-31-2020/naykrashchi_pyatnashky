@@ -34,7 +34,6 @@ namespace Fifteens
         {
             this.InitializeComponent();
             this.NicknameLabel.Content = App.Current.Properties[AppPropertyKeys.Login];
-            this.ManageImagesButton.Click += this.OnClickManageImages;
             this.NewGameButton.Click += this.OnClickNewGame;
             this.ExitButton.Click += this.OnClickExit;
             this.MatchHistoryButton.Click += this.OnClickMatchHistory;
@@ -63,13 +62,6 @@ namespace Fifteens
         private void OnClickContinueGame(object sender, RoutedEventArgs e)
         {
             MatchPickWindow window = new MatchPickWindow();
-            window.Show();
-            this.Close();
-        }
-
-        private void OnClickManageImages(object sender, RoutedEventArgs e)
-        {
-            ManageImagesWindow window = new ManageImagesWindow();
             window.Show();
             this.Close();
         }

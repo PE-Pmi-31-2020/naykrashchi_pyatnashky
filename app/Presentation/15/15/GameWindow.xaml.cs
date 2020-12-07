@@ -47,6 +47,7 @@ namespace Fifteens
             this.GameSize = gameSize;
             this.Match = new Game(this.GameSize);
             this.customImage = customImage;
+            this.MatchStartDateTime = DateTime.Now;
             if (this.customImage)
             {
                 this.CropImage();
@@ -66,7 +67,8 @@ namespace Fifteens
             this.GameSize = match.Size.Value;
             this.Match = new Game(match.Layout, match.Turns.Value);
             this.TurnsLabel.Content = "Turns: " + this.Match.Turns;
-            this.customImage = match.CustomPicture == string.Empty ? false : true;
+            this.customImage = match.CustomPicture == null ? false : true;
+            this.MatchStartDateTime = DateTime.Now;
             if (this.customImage)
             {
                 App.Current.Properties[AppPropertyKeys.CustomImagePath] = match.CustomPicture;

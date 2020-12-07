@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Fifteens"
         mc:Ignorable="d"
-        Title="MatchHistoryWindow" Height="450" Width="800">
+        Title="Match history" Height="450" Width="800">
     <Window.Resources>
         <DataTemplate x:Key="MatchHistoryLineTemplate">
             <StackPanel Orientation="Horizontal">
@@ -30,7 +30,7 @@
         <DockPanel Background="{StaticResource BackgroundBrush}" LastChildFill="True">
             <Button x:Name="BackButton" DockPanel.Dock="Top" Content="Back" MinWidth="50" Margin="10" HorizontalAlignment="Left"/>
             <WrapPanel DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Center" MaxHeight="225">
-                <ListView Name="MatchesList" ItemTemplate="{StaticResource MatchHistoryLineTemplate}">
+                <ListView Name="MatchesList" ItemTemplate="{StaticResource MatchHistoryLineTemplate}" GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn DisplayMemberBinding="{Binding Date}">Date</GridViewColumn>
