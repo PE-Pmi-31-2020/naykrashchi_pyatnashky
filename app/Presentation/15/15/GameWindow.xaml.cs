@@ -29,6 +29,7 @@ namespace Fifteens
         private int score;
 
         private bool isFirstMove;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GameWindow"/> class.
         /// </summary>

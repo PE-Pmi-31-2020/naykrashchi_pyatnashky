@@ -51,6 +51,7 @@ namespace Fifteens
         {
             MatchHistoryLine lbi = (sender as ListBox).SelectedItems[0] as MatchHistoryLine;
             Match match = DBManager.GetMatch(lbi.MatchId.Value);
+            DBManager.DeleteMatch(match.MatchId);
             GameWindow window = new GameWindow(match);
             window.Show();
             this.Close();
