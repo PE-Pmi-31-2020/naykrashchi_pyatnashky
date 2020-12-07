@@ -58,6 +58,8 @@ namespace DAL
 
                 entity.Property(e => e.Turns).HasColumnName("turns");
 
+                entity.Property(e => e.Size).HasColumnName("size");
+
                 entity.Property(e => e.UserId).HasColumnName("user_id");
 
                 entity.HasOne(d => d.User)

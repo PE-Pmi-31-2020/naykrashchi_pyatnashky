@@ -54,6 +54,11 @@ namespace DAL
         public int? Turns { get; set; }
 
         /// <summary>
+        /// Gets or sets size.
+        /// </summary>
+        public int? Size { get; set; }
+
+        /// <summary>
         /// Gets or sets path to picture.
         /// </summary>
         public string CustomPicture { get; set; }
