@@ -105,7 +105,6 @@ namespace BLL
                 for (int j = 0; j < this.Size; j++)
                 {
                     l.Add(Convert.ToInt32(hash[(i * this.Size) + j]) - 32);
-                    //this.Layout[i][j] = Convert.ToInt32(hash[(i * this.Size) + j]) - 32;
                 }
 
                 this.Layout.Add(l);
