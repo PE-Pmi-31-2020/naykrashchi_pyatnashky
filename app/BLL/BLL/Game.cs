@@ -202,26 +202,6 @@ namespace BLL
         }
 
         /// <summary>
-        /// prints layout.
-        /// </summary>
-        public void Print()
-        {
-            Console.Clear();
-            for (int i = 0; i < this.Size; i++)
-            {
-                for (int j = 0; j < this.Size; j++)
-                {
-                    Console.Write(this.Layout[i][j]);
-                    Console.Write('\t');
-                }
-
-                Console.WriteLine();
-            }
-
-            Console.WriteLine($"turns: {this.Turns}");
-        }
-
-        /// <summary>
         /// move to some position.
         /// </summary>
         /// <param name="x">x to.</param>
@@ -324,7 +304,7 @@ namespace BLL
                 Game g = new Game(4);
                 while (!g.Solved())
                 {
-                    g.Print();
+                    //g.Print();
                     var ch = Console.ReadKey(false).Key;
                     switch (ch)
                     {
