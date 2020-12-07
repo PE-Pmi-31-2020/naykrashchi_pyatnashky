@@ -9,11 +9,13 @@
     <Grid>
         <DockPanel Background="{StaticResource BackgroundBrush}" LastChildFill="True">
             <Button x:Name="BackButton" DockPanel.Dock="Top" Content="Back" MinWidth="50" Margin="10" HorizontalAlignment="Left"/>
-            <StackPanel x:Name="FieldContainer" DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Center" MaxHeight="225" MaxWidth="400">
+            <StackPanel x:Name="FieldContainer" DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Center" MaxWidth="400">
                 <Label Content="Choose game field size" FontSize="16"/>
                 <RadioButton x:Name="radio4" GroupName="GameSizes" Content="4x4" FontSize="16" Margin="10" IsChecked="True"/>
                 <RadioButton x:Name="radio5" GroupName="GameSizes" Content="5x5" FontSize="16" Margin="10"/>
                 <RadioButton x:Name="radio6" GroupName="GameSizes" Content="6x6" FontSize="16" Margin="10"/>
+                <Button x:Name="ChooseCustomImage" DockPanel.Dock="Top" Content="Choose custom image" MinWidth="50" Margin="10" HorizontalAlignment="Center"/>
+                <Label x:Name="FilenameLabel" Content="None" FontSize="14" HorizontalAlignment="Center"/>
                 <Button x:Name="OKButton" DockPanel.Dock="Top" Content="OK" MinWidth="50" Margin="10" HorizontalAlignment="Center"/>
             </StackPanel>
         </DockPanel>

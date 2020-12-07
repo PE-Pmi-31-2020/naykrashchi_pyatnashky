@@ -30,10 +30,14 @@ namespace Fifteens
 
         private bool isFirstMove;
 
+        private bool customImage;
+
+        private Dictionary<int, ImageBrush> imagePartsMap;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GameWindow"/> class.
         /// </summary>
-        public GameWindow(int gameSize)
+        public GameWindow(int gameSize, bool customImage)
         {
             this.InitializeComponent();
             this.BackButton.Click += this.OnClickBack;
@@ -42,6 +46,12 @@ namespace Fifteens
             this.Duration = 0;
             this.GameSize = gameSize;
             this.Match = new Game(this.GameSize);
+            this.customImage = customImage;
+            if (this.customImage)
+            {
+                this.CropImage();
+            }
+
             this.InitGame();
         }
 
@@ -56,6 +66,7 @@ namespace Fifteens
             this.GameSize = match.Size.Value;
             this.Match = new Game(match.Layout, match.Turns.Value);
             this.TurnsLabel.Content = "Turns: " + this.Match.Turns;
+            this.customImage = match.CustomPicture == string.Empty ? false : true;
             this.InitGame();
         }
 
@@ -91,6 +102,9 @@ namespace Fifteens
                     Size = this.GameSize,
                     Layout = this.Match.Hash_layout(),
                 });
+                MainWindow window = new MainWindow();
+                window.Show();
+                this.Close();
             }
         }
 
@@ -120,7 +134,7 @@ namespace Fifteens
                 }
             }
 
-            this.UpdateButtonNumbers();
+            this.UpdateButtons();
             if (this.Match.Solved())
             {
                 this.dispatcherTimer.Stop();
@@ -130,6 +144,35 @@ namespace Fifteens
                 MainWindow window = new MainWindow();
                 window.Show();
                 this.Close();
+            }
+        }
+
+        private void CropImage()
+        {
+            BitmapImage bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.UriSource = new Uri(@App.Current.Properties[AppPropertyKeys.CustomImagePath].ToString());
+            bitmap.EndInit();
+
+            this.imagePartsMap = new Dictionary<int, ImageBrush>();
+
+            for (int i = 0; i < this.GameSize; i++)
+            {
+                for (int j = 0; j < this.GameSize; j++)
+                {
+                    Image croppedImage = new Image();
+                    croppedImage.Height = bitmap.PixelHeight / this.GameSize;
+                    croppedImage.Width = bitmap.PixelWidth / this.GameSize;
+                    CroppedBitmap cb = new CroppedBitmap(bitmap, new Int32Rect((int)croppedImage.Width * j, (int)croppedImage.Height * i, (int)croppedImage.Width, (int)croppedImage.Height));
+
+                    // croppedImage.Height = this.Height / 2 / this.GameSize;
+                    // croppedImage.Width = this.Width / 2 / this.GameSize;
+                    // CroppedBitmap cb = new CroppedBitmap(bitmap, new Int32Rect((int)croppedImage.Width * j, (int)croppedImage.Height * i, (int)croppedImage.Width, (int)croppedImage.Height));
+                    croppedImage.Source = cb;
+                    croppedImage.Stretch = Stretch.Fill;
+                    croppedImage.StretchDirection = StretchDirection.Both;
+                    this.imagePartsMap.Add((i * this.GameSize) + j + 1, new ImageBrush(croppedImage.Source));
+                }
             }
         }
 
@@ -147,7 +190,7 @@ namespace Fifteens
             });
         }
 
-        private void UpdateButtonNumbers()
+        private void UpdateButtons()
         {
             for (int i = 0; i < this.GameSize; i++)
             {
@@ -155,11 +198,25 @@ namespace Fifteens
                 {
                     if (this.Match.Layout[i][j] != 0)
                     {
-                        this.GameField[i, j].Content = this.Match.Layout[i][j];
+                        if (this.customImage)
+                        {
+                            this.GameField[i, j].Background = this.imagePartsMap[this.Match.Layout[i][j]];
+                        }
+                        else
+                        {
+                            this.GameField[i, j].Content = this.Match.Layout[i][j];
+                        }
                     }
                     else
                     {
-                        this.GameField[i, j].Content = string.Empty;
+                        if (this.customImage)
+                        {
+                            this.GameField[i, j].Background = (LinearGradientBrush)App.Current.Resources["ButtonBackgroundBrush"];
+                        }
+                        else
+                        {
+                            this.GameField[i, j].Content = string.Empty;
+                        }
                     }
                 }
             }
@@ -171,7 +228,15 @@ namespace Fifteens
             double buttonWidth = this.Width / 2 / this.GameSize;
 
             this.GameField = new Button[this.GameSize, this.GameSize];
+            for (int k = 0; k < this.GameSize; k++)
+            {
+                for (int m = 0; m < this.GameSize; m++)
+                {
+                    this.Match.Layout[k][m] = (this.GameSize * k) + m + 1;
+                }
+            }
 
+            this.Match.Layout[this.GameSize - 1][this.GameSize - 1] = 0;
             for (int i = 0; i < this.GameSize; i++)
             {
                 for (int j = 0; j < this.GameSize; j++)
@@ -184,7 +249,14 @@ namespace Fifteens
                     this.FieldContainer.Children.Add(this.GameField[i, j]);
                     if (this.Match.Layout[i][j] != 0)
                     {
-                        this.GameField[i, j].Content = this.Match.Layout[i][j];
+                        if (this.customImage)
+                        {
+                            this.GameField[i, j].Background = this.imagePartsMap[this.Match.Layout[i][j]];
+                        }
+                        else
+                        {
+                            this.GameField[i, j].Content = this.Match.Layout[i][j];
+                        }
                     }
                 }
             }

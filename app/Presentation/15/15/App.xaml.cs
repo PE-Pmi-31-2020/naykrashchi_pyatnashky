@@ -20,6 +20,7 @@ namespace Fifteens
         Login,
         Password,
         UserID,
+        CustomImagePath,
     }
 
     /// <summary>
