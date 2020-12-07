@@ -173,7 +173,6 @@ namespace Unit_Tests
             Assert.AreEqual(hash, g.Hash_layout());
         }
 
-
         [TestMethod]
         public void TestMouseMoveControl2()
         {
@@ -209,7 +208,6 @@ namespace Unit_Tests
             Assert.AreNotEqual(hash, g.Hash_layout());
         }
 
-
         [TestMethod]
         public void TestSize()
         {
@@ -220,6 +218,14 @@ namespace Unit_Tests
                 ok &= (g.Size == size);
             }
             Assert.IsTrue(ok);
+        }
+
+        [TestMethod]
+        public void TestConstructor()
+        {
+            Game g = new Game(4);
+            Game g1 = new Game(g.Hash_layout(), 0);
+            Assert.AreEqual(g.Hash_layout(), g1.Hash_layout());
         }
     }
 }
