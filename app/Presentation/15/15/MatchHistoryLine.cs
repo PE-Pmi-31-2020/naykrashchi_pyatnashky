@@ -16,16 +16,20 @@ namespace Fifteens
         /// <summary>
         /// Initializes a new instance of the <see cref="MatchHistoryLine"/> class.
         /// </summary>
+        /// <param name="matchId"> match ID.</param>
         /// <param name="duration"> duration.</param>
         /// <param name="score"> score.</param>
         /// <param name="turns"> turns.</param>
         /// <param name="date"> date.</param>
-        public MatchHistoryLine(int? duration, int? score, int? turns, DateTime? date)
+        /// <param name="size"> match size.</param>
+        public MatchHistoryLine(int? matchId, int? duration, int? score, int? turns, DateTime? date, int? size)
         {
+            this.MatchId = matchId;
             this.Duration = duration;
             this.Score = score;
             this.Turns = turns;
             this.Date = date;
+            this.Size = size;
         }
 
         /// <summary>
@@ -47,5 +51,15 @@ namespace Fifteens
         /// gets or sets time and date when match was played.
         /// </summary>
         public DateTime? Date { get; set; }
+
+        /// <summary>
+        /// gets or sets match field size.
+        /// </summary>
+        public int? Size { get; set; }
+
+        /// <summary>
+        /// gets or sets match ID.
+        /// </summary>
+        public int? MatchId { get; set; }
     }
 }

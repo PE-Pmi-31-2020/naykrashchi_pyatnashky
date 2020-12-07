@@ -85,7 +85,7 @@ namespace BLL
             {
                 for (int j = 0; j < this.Size; j++)
                 {
-                    hash += Convert.ToChar(this.Layout[i][j]);
+                    hash += Convert.ToChar(this.Layout[i][j] + 32);
                 }
             }
 
@@ -98,12 +98,17 @@ namespace BLL
         /// <param name="hash">hash.</param>
         public void Unhash(string hash)
         {
+            this.Layout = new List<List<int>>();
             for (int i = 0; i < this.Size; i++)
             {
+                List<int> l = new List<int>();
                 for (int j = 0; j < this.Size; j++)
                 {
-                    this.Layout[i][j] = Convert.ToInt32(hash[(i * this.Size) + j]);
+                    l.Add(Convert.ToInt32(hash[(i * this.Size) + j]) - 32);
+                    //this.Layout[i][j] = Convert.ToInt32(hash[(i * this.Size) + j]) - 32;
                 }
+
+                this.Layout.Add(l);
             }
         }
 

@@ -1,18 +1,17 @@
-﻿<Window x:Class="Fifteens.MatchHistoryWindow"
+﻿<Window x:Class="Fifteens.MatchPickWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Fifteens"
         mc:Ignorable="d"
-        Title="MatchHistoryWindow" Height="450" Width="800">
+        Title="MatchPickWindow" Height="450" Width="800">
     <Window.Resources>
         <DataTemplate x:Key="MatchHistoryLineTemplate">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="{Binding Date}"/>
                 <TextBlock Text="{Binding Duration}"/>
                 <TextBlock Text="{Binding Turns}"/>
-                <TextBlock Text="{Binding Score}"/>
                 <TextBlock Text="{Binding Size}"/>
             </StackPanel>
         </DataTemplate>
@@ -30,31 +29,16 @@
         <DockPanel Background="{StaticResource BackgroundBrush}" LastChildFill="True">
             <Button x:Name="BackButton" DockPanel.Dock="Top" Content="Back" MinWidth="50" Margin="10" HorizontalAlignment="Left"/>
             <WrapPanel DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Center" MaxHeight="225">
-                <ListView Name="MatchesList" ItemTemplate="{StaticResource MatchHistoryLineTemplate}">
+                <ListView Name="MatchesList" SelectionMode="Single" SelectionChanged="StartGame" ItemTemplate="{StaticResource MatchHistoryLineTemplate}">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn DisplayMemberBinding="{Binding Date}">Date</GridViewColumn>
                             <GridViewColumn DisplayMemberBinding="{Binding Duration}">Duration</GridViewColumn>
                             <GridViewColumn DisplayMemberBinding="{Binding Turns}">Turns</GridViewColumn>
-                            <GridViewColumn DisplayMemberBinding="{Binding Score}">Score</GridViewColumn>
                             <GridViewColumn DisplayMemberBinding="{Binding Size}">Size</GridViewColumn>
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <!--<ListBox x:Name="MatchesList" ItemTemplate="{StaticResource MatchHistoryLineTemplate}">
-                    <ListBox.ItemContainerStyle>
-                        <Style TargetType="{x:Type ListBoxItem}">
-                            <Setter Property="Background" Value="DarkBlue"/>
-                            <Setter Property="Margin" Value="5"/>
-                            <Style.Triggers>
-                                <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="BorderThickness" Value="1"/>
-                                    <Setter Property="BorderBrush" Value="Black"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ListBox.ItemContainerStyle>
-                </ListBox>-->
             </WrapPanel>
         </DockPanel>
     </Grid>
