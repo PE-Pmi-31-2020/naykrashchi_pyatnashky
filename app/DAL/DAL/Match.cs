@@ -58,6 +58,9 @@ namespace DAL
         /// </summary>
         public string CustomPicture { get; set; }
 
+        /// <summary>
+        /// Gets or sets user for relation between tables.
+        /// </summary>
         public virtual User User { get; set; }
     }
 }

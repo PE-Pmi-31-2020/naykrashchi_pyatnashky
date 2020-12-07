@@ -18,7 +18,7 @@ namespace DAL
         /// </summary>
         public User()
         {
-            Matches = new HashSet<Match>();
+            this.Matches = new HashSet<Match>();
         }
 
         /// <summary>
@@ -36,6 +36,9 @@ namespace DAL
         /// </summary>
         public string Password { get; set; }
 
+        /// <summary>
+        /// Gets or sets matches for relations.
+        /// </summary>
         public virtual ICollection<Match> Matches { get; set; }
     }
 }
