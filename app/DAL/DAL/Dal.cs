@@ -30,6 +30,11 @@ namespace DAL
             db.Matches.Add(match);
             db.SaveChanges();
         }
+        public static void DeleteMatch(int id)
+        {
+            db.Matches.Remove(db.Matches.Find(id));
+            db.SaveChanges();
+        }
 
         public static bool LogIn(string login, string password, ref int user_id)
         {
