@@ -1,4 +1,4 @@
-﻿// <copyright file="MatchHistoryWindow.xaml.cs" company="OnceDaughtersAlwaysDaughters">
+﻿// <copyright file="MatchPickWindow.xaml.cs" company="OnceDaughtersAlwaysDaughters">
 // Copyright (c) OnceDaughtersAlwaysDaughters. All rights reserved.
 // </copyright>
 
@@ -19,21 +19,20 @@ namespace Fifteens
     using DAL;
 
     /// <summary>
-    /// Interaction logic for MatchHistoryWindow.xaml.
+    /// Interaction logic for MatchPickWindow.xaml.
     /// </summary>
-    public partial class MatchHistoryWindow : Window
+    public partial class MatchPickWindow : Window
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MatchHistoryWindow"/> class.
+        /// Initializes a new instance of the <see cref="MatchPickWindow"/> class.
         /// </summary>
-        public MatchHistoryWindow()
+        public MatchPickWindow()
         {
             this.InitializeComponent();
             this.BackButton.Click += this.OnClickBack;
-
             this.Lines = new ObservableCollection<MatchHistoryLine>();
 
-            var matches = DBManager.GetUserMatches((int)App.Current.Properties[AppPropertyKeys.UserID], true);
+            var matches = DBManager.GetUserMatches((int)App.Current.Properties[AppPropertyKeys.UserID], false);
             foreach (var katka in matches)
             {
                 this.Lines.Add(new MatchHistoryLine(katka.MatchId, katka.Duration, katka.Score, katka.Turns, katka.DateTime, katka.Size));
@@ -47,6 +46,16 @@ namespace Fifteens
         /// gets or sets collection of lines from database to be displayed in window.
         /// </summary>
         public ObservableCollection<MatchHistoryLine> Lines { get; set; }
+
+        private void StartGame(object sender, SelectionChangedEventArgs args)
+        {
+            MatchHistoryLine lbi = (sender as ListBox).SelectedItems[0] as MatchHistoryLine;
+            Match match = DBManager.GetMatch(lbi.MatchId.Value);
+            DBManager.DeleteMatch(match.MatchId);
+            GameWindow window = new GameWindow(match);
+            window.Show();
+            this.Close();
+        }
 
         private void OnClickBack(object sender, RoutedEventArgs e)
         {

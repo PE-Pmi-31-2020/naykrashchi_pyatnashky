@@ -35,11 +35,12 @@ namespace Fifteens
             this.InitializeComponent();
             this.NicknameLabel.Content = App.Current.Properties[AppPropertyKeys.Login];
             this.ManageImagesButton.Click += this.OnClickManageImages;
-            this.PlayButton.Click += this.FakePlay;
+            this.NewGameButton.Click += this.OnClickNewGame;
             this.ExitButton.Click += this.OnClickExit;
             this.MatchHistoryButton.Click += this.OnClickMatchHistory;
             this.LogOutButton.Click += this.OnClickLogOut;
             this.DeleteAccButton.Click += this.OnClickDeleteAcc;
+            this.ContinueGameButton.Click += this.OnClickContinueGame;
         }
 
         /// <summary>
@@ -52,9 +53,16 @@ namespace Fifteens
         /// </summary>
         public string Password { get; }
 
-        private void FakePlay(object sender, RoutedEventArgs e)
+        private void OnClickNewGame(object sender, RoutedEventArgs e)
         {
-            GameWindow window = new GameWindow();
+            MatchSettingsWindow window = new MatchSettingsWindow();
+            window.Show();
+            this.Close();
+        }
+
+        private void OnClickContinueGame(object sender, RoutedEventArgs e)
+        {
+            MatchPickWindow window = new MatchPickWindow();
             window.Show();
             this.Close();
         }

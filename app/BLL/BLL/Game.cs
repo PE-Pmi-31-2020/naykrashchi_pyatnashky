@@ -85,7 +85,7 @@ namespace BLL
             {
                 for (int j = 0; j < this.Size; j++)
                 {
-                    hash += Convert.ToChar(this.Layout[i][j]);
+                    hash += Convert.ToChar(this.Layout[i][j] + 32);
                 }
             }
 
@@ -98,12 +98,17 @@ namespace BLL
         /// <param name="hash">hash.</param>
         public void Unhash(string hash)
         {
+            this.Layout = new List<List<int>>();
             for (int i = 0; i < this.Size; i++)
             {
+                List<int> l = new List<int>();
                 for (int j = 0; j < this.Size; j++)
                 {
-                    this.Layout[i][j] = Convert.ToInt32(hash[(i * this.Size) + j]);
+                    l.Add(Convert.ToInt32(hash[(i * this.Size) + j]) - 32);
+                    //this.Layout[i][j] = Convert.ToInt32(hash[(i * this.Size) + j]) - 32;
                 }
+
+                this.Layout.Add(l);
             }
         }
 
@@ -202,26 +207,6 @@ namespace BLL
         }
 
         /// <summary>
-        /// prints layout.
-        /// </summary>
-        public void Print()
-        {
-            Console.Clear();
-            for (int i = 0; i < this.Size; i++)
-            {
-                for (int j = 0; j < this.Size; j++)
-                {
-                    Console.Write(this.Layout[i][j]);
-                    Console.Write('\t');
-                }
-
-                Console.WriteLine();
-            }
-
-            Console.WriteLine($"turns: {this.Turns}");
-        }
-
-        /// <summary>
         /// move to some position.
         /// </summary>
         /// <param name="x">x to.</param>
@@ -307,7 +292,7 @@ namespace BLL
                 }
             }
 
-            return (inversions & 1) == 0;
+            return ((inversions + this.Size) & 1) == 0;
         }
 
         /// <summary>
@@ -324,7 +309,7 @@ namespace BLL
                 Game g = new Game(4);
                 while (!g.Solved())
                 {
-                    g.Print();
+                    //g.Print();
                     var ch = Console.ReadKey(false).Key;
                     switch (ch)
                     {

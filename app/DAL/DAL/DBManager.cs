@@ -44,6 +44,16 @@ namespace DAL
         }
 
         /// <summary>
+        /// Deletes match.
+        /// </summary>
+        /// <param name="id"> Match id. </param>
+        public static void DeleteMatch(int id)
+        {
+            db.Matches.Remove(db.Matches.Find(id));
+            db.SaveChanges();
+        }
+
+        /// <summary>
         /// Function to add a match to the database.
         /// </summary>
         /// <param name="match"> Object of the class match.</param>
@@ -108,12 +118,6 @@ namespace DAL
         /// <param name="args"> Any string. </param>
         public static void Main(string[] args)
         {
-            var salt = CreateSalt("nyanlove17".Length);
-            for (int i = 0; i < salt.Length; i++)
-            {
-                salt
-            }
-            GenerateSaltedHash(Encoding.ASCII.GetBytes("nyanlove17"), salt);
         }
 
         private static string CreateSalt(int size)
