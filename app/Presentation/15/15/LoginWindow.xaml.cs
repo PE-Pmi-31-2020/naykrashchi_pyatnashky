@@ -59,6 +59,7 @@ namespace Fifteens
                 {
                     MessageBox.Show("Wrong login or password");
                 }
+                Logger.Log.Info("User signed in");
             }
             catch (System.InvalidOperationException ex)
             {
@@ -82,6 +83,7 @@ namespace Fifteens
                 this.SaveRememberMeValue();
                 this.StoreUserData(userID, login, password);
                 this.GoToMainWindow();
+                Logger.Log.Info("User signed up");
             }
             catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
             {

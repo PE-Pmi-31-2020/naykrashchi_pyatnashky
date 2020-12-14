@@ -86,6 +86,7 @@ namespace Fifteens
             App.Current.Properties.Remove(AppPropertyKeys.Password);
             App.Current.Properties.Remove(AppPropertyKeys.RememberMe);
             LoginWindow window = new LoginWindow();
+            Logger.Log.Info("User Logged out");
             window.Show();
             this.Close();
         }
@@ -97,6 +98,7 @@ namespace Fifteens
             {
                 try
                 {
+                    Logger.Log.Info($"Account {App.Current.Properties[AppPropertyKeys.Login].ToString()} deleted");
                     DBManager.DeleteUser((int)App.Current.Properties[AppPropertyKeys.UserID]);
                     this.OnClickLogOut(sender, e);
                 }

@@ -13,7 +13,9 @@ namespace Fifteens
     using System.Linq;
     using System.Threading.Tasks;
     using System.Windows;
+    using BLL;
 
+    #pragma warning disable
     public enum AppPropertyKeys
     {
         RememberMe,
@@ -51,12 +53,14 @@ namespace Fifteens
             catch (System.Security.SecurityException sx)
             {
                 MessageBox.Show(sx.Message);
-                throw;
+                Logger.Log.Error(sx);
             }
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            Logger.InitLogger();
+            Logger.Log.Info("PARASHA");
             try
             {
                 IsolatedStorageFile isolatedStorage = IsolatedStorageFile.GetUserStoreForAssembly();
@@ -75,7 +79,7 @@ namespace Fifteens
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                throw;
+                Logger.Log.Error(ex);
             }
         }
     }

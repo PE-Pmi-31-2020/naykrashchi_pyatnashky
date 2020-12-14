@@ -41,6 +41,7 @@ namespace Fifteens
         /// </summary>
         public GameWindow(int gameSize, bool customImage)
         {
+            Logger.Log.Info("new game started");
             this.InitializeComponent();
             this.BackButton.Click += this.OnClickBack;
             this.SaveMatchButton.Click += this.OnClickSaveMatch;
@@ -61,6 +62,7 @@ namespace Fifteens
 
         public GameWindow(Match match)
         {
+            Logger.Log.Info("game loaded");
             this.InitializeComponent();
             this.BackButton.Click += this.OnClickBack;
             this.SaveMatchButton.Click += this.OnClickSaveMatch;
@@ -169,6 +171,7 @@ namespace Fifteens
             this.UpdateButtons();
             if (this.Match.Solved())
             {
+                Logger.Log.Info("Game Finished");
                 this.dispatcherTimer.Stop();
                 this.score = Math.Max(1000000 - (this.Duration * this.Match.Turns), 0);
                 int status = this.SaveMatch();
@@ -232,6 +235,7 @@ namespace Fifteens
                     Turns = this.Match.Turns,
                     Size = this.GameSize,
                 });
+                Logger.Log.Info("Match saved");
             }
             catch (System.InvalidOperationException ex)
             {
