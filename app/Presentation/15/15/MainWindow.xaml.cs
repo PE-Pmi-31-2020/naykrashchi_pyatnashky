@@ -76,6 +76,7 @@ namespace Fifteens
 
         private void OnClickExit(object sender, RoutedEventArgs e)
         {
+            Logger.Log.Info("Program closed.");
             this.Close();
         }
 
@@ -86,7 +87,7 @@ namespace Fifteens
             App.Current.Properties.Remove(AppPropertyKeys.Password);
             App.Current.Properties.Remove(AppPropertyKeys.RememberMe);
             LoginWindow window = new LoginWindow();
-            Logger.Log.Info("User Logged out");
+            Logger.Log.Info("User logged out.");
             window.Show();
             this.Close();
         }
