@@ -17,6 +17,7 @@ namespace Fifteens
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
     using System.Windows.Shapes;
+    using BLL;
     using DAL;
 
     /// <summary>
@@ -62,6 +63,7 @@ namespace Fifteens
             catch (System.InvalidOperationException ex)
             {
                 MessageBox.Show(ex.InnerException.Message);
+                Logger.Log.Error(ex);
             }
         }
 
@@ -83,6 +85,7 @@ namespace Fifteens
             }
             catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
             {
+                Logger.Log.Error(ex);
                 if (ex.InnerException.Message.Split(":")[0] == "23505")
                 {
                     MessageBox.Show("Login already taken");
@@ -95,6 +98,7 @@ namespace Fifteens
             catch (System.InvalidOperationException ex)
             {
                 MessageBox.Show(ex.InnerException.Message);
+                Logger.Log.Error(ex);
             }
         }
 

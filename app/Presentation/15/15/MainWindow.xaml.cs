@@ -18,6 +18,7 @@ namespace Fifteens
     using System.Windows.Media.Imaging;
     using System.Windows.Navigation;
     using System.Windows.Shapes;
+    using BLL;
     using DAL;
 
     /// <summary>
@@ -102,6 +103,7 @@ namespace Fifteens
                 catch (System.InvalidOperationException ex)
                 {
                     MessageBox.Show(ex.InnerException.Message);
+                    Logger.Log.Error(ex);
                 }
             }
         }

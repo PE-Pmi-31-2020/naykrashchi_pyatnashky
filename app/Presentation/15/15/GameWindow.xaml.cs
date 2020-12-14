@@ -135,6 +135,7 @@ namespace Fifteens
                 catch (System.InvalidOperationException ex)
                 {
                     MessageBox.Show(ex.InnerException.Message);
+                    Logger.Log.Error(ex);
                 }
             }
         }
@@ -235,6 +236,7 @@ namespace Fifteens
             catch (System.InvalidOperationException ex)
             {
                 MessageBox.Show(ex.InnerException.Message);
+                Logger.Log.Error(ex);
                 return 1;
             }
 
