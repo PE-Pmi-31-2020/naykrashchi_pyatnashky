@@ -45,6 +45,7 @@ namespace BLL
             this.Size = size;
             this.Layout = this.Layout_init();
             this.Turns = 0;
+            Logger.Log.Info("New Game Started");
         }
 
         /// <summary>
@@ -57,6 +58,7 @@ namespace BLL
             this.Size = (int)Math.Sqrt(hash.Length);
             this.Unhash(hash);
             this.Turns = turns;
+            Logger.Log.Info("New Game Loaded");
         }
 
         /// <summary>
@@ -88,7 +90,7 @@ namespace BLL
                     hash += Convert.ToChar(this.Layout[i][j] + 32);
                 }
             }
-
+            Logger.Log.Info("Game Saved");
             return hash;
         }
 
@@ -134,7 +136,7 @@ namespace BLL
                     }
                 }
             }
-
+            Logger.Log.Info("Game Finished");
             return true;
         }
 
