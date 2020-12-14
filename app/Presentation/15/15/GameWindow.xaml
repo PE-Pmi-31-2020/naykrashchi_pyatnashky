@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Fifteens"
         mc:Ignorable="d"
-        Title="Pyatnashky" Height="450" Width="800">
+        Title="Pyatnashky" Height="800" Width="800">
     <Grid>
         <DockPanel Background="{StaticResource BackgroundBrush}" LastChildFill="True">
             <DockPanel DockPanel.Dock="Top">
@@ -15,7 +15,7 @@
                 <Label x:Name="TurnsLabel" DockPanel.Dock="Right" Content="Turns: 0" Margin="10" FontSize="16" HorizontalAlignment="Right"></Label>
             </DockPanel>
             
-            <WrapPanel x:Name="FieldContainer" DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Center" MaxHeight="225" MaxWidth="400">
+            <WrapPanel x:Name="FieldContainer" DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Center" MaxHeight="400" MaxWidth="400">
             </WrapPanel>
         </DockPanel>
     </Grid>
