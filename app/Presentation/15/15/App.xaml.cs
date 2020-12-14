@@ -60,7 +60,6 @@ namespace Fifteens
         protected override void OnStartup(StartupEventArgs e)
         {
             Logger.InitLogger();
-            Logger.Log.Info("PARASHA");
             try
             {
                 IsolatedStorageFile isolatedStorage = IsolatedStorageFile.GetUserStoreForAssembly();

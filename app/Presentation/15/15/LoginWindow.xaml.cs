@@ -59,7 +59,6 @@ namespace Fifteens
                 {
                     MessageBox.Show("Wrong login or password");
                 }
-                Logger.Log.Info("User signed in");
             }
             catch (System.InvalidOperationException ex)
             {
