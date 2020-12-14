@@ -7,6 +7,7 @@
 namespace DAL
 {
     using System;
+    using System.Configuration;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -49,7 +50,7 @@ namespace DAL
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=fifteens_database;Username=postgres;Password=555");
+                optionsBuilder.UseNpgsql(ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString);
             }
         }
 
