@@ -37,6 +37,7 @@ namespace Fifteens
 
             this.LogInButton.Click += this.Login;
             this.SignUpButton.Click += this.SignUp;
+            this.ExitButton.Click += this.OnClickExit;
         }
 
         private void Login(object sender, RoutedEventArgs e)
@@ -44,17 +45,29 @@ namespace Fifteens
             int userID = -1;
             string login = this.LoginInput.Text.Trim();
             string password = this.PasswordInput.Password;
-            bool successfullyLogged = DBManager.LogIn(login, password, ref userID);
-            if (successfullyLogged)
+            try
             {
-                this.SaveRememberMeValue();
-                this.StoreUserData(userID, login, password);
-                this.GoToMainWindow();
+                bool successfullyLogged = DBManager.LogIn(login, password, ref userID);
+                if (successfullyLogged)
+                {
+                    this.SaveRememberMeValue();
+                    this.StoreUserData(userID, login, password);
+                    this.GoToMainWindow();
+                }
+                else
+                {
+                    MessageBox.Show("Wrong login or password");
+                }
             }
-            else
+            catch (System.InvalidOperationException ex)
             {
-                MessageBox.Show("Wrong login or password");
+                MessageBox.Show(ex.InnerException.Message);
             }
+        }
+
+        private void OnClickExit(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
 
         private void SignUp(object sender, RoutedEventArgs e)
@@ -78,6 +91,10 @@ namespace Fifteens
                 {
                     MessageBox.Show(ex.InnerException.Message);
                 }
+            }
+            catch (System.InvalidOperationException ex)
+            {
+                MessageBox.Show(ex.InnerException.Message);
             }
         }
 

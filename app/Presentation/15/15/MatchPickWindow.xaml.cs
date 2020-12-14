@@ -36,13 +36,19 @@ namespace Fifteens
             this.BackButton.Click += this.OnClickBack;
             this.Lines = new ObservableCollection<MatchHistoryLine>();
 
-            var matches = DBManager.GetUserMatches((int)App.Current.Properties[AppPropertyKeys.UserID], false);
-            foreach (var katka in matches)
+            try
             {
-                this.Lines.Add(new MatchHistoryLine(katka.MatchId, katka.Duration, katka.Score, katka.Turns, katka.DateTime, katka.Size));
+                var matches = DBManager.GetUserMatches((int)App.Current.Properties[AppPropertyKeys.UserID], false);
+                foreach (var katka in matches)
+                {
+                    this.Lines.Add(new MatchHistoryLine(katka.MatchId, katka.Duration, katka.Score, katka.Turns, katka.DateTime, katka.Size));
+                }
+            }
+            catch (System.InvalidOperationException ex)
+            {
+                MessageBox.Show(ex.InnerException.Message);
             }
 
-            // here we will get data from database in future.
             this.MatchesList.ItemsSource = this.Lines;
         }
 
@@ -54,10 +60,17 @@ namespace Fifteens
         private void StartGame(object sender, SelectionChangedEventArgs args)
         {
             MatchHistoryLine lbi = (sender as ListBox).SelectedItems[0] as MatchHistoryLine;
-            Match match = DBManager.GetMatch(lbi.MatchId.Value);
-            GameWindow window = new GameWindow(match);
-            window.Show();
-            this.Close();
+            try
+            {
+                Match match = DBManager.GetMatch(lbi.MatchId.Value);
+                GameWindow window = new GameWindow(match);
+                window.Show();
+                this.Close();
+            }
+            catch (System.InvalidOperationException ex)
+            {
+                MessageBox.Show(ex.InnerException.Message);
+            }
         }
 
         private void OnClickBack(object sender, RoutedEventArgs e)

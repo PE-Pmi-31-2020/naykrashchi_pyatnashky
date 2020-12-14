@@ -49,7 +49,7 @@ namespace DAL
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=fifteens_database;Username=postgres;Password=nyanlove17");
+                optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=fifteens_database;Username=postgres;Password=555");
             }
         }
 

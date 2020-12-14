@@ -105,30 +105,37 @@ namespace Fifteens
 
             if (res == MessageBoxResult.Yes)
             {
-                if (this.databaseMatchId != -1)
+                try
                 {
-                    DBManager.DeleteMatch(this.databaseMatchId);
-                }
+                    if (this.databaseMatchId != -1)
+                    {
+                        DBManager.DeleteMatch(this.databaseMatchId);
+                    }
 
-                Match katka = new Match()
-                {
-                    UserId = (int)App.Current.Properties[AppPropertyKeys.UserID],
-                    Duration = this.Duration,
-                    DateTime = this.MatchStartDateTime,
-                    Result = false,
-                    Turns = this.Match.Turns,
-                    Size = this.GameSize,
-                    Layout = this.Match.Hash_layout(),
-                };
-                if (this.customImage)
-                {
-                    katka.CustomPicture = App.Current.Properties[AppPropertyKeys.CustomImagePath].ToString();
-                }
+                    Match katka = new Match()
+                    {
+                        UserId = (int)App.Current.Properties[AppPropertyKeys.UserID],
+                        Duration = this.Duration,
+                        DateTime = this.MatchStartDateTime,
+                        Result = false,
+                        Turns = this.Match.Turns,
+                        Size = this.GameSize,
+                        Layout = this.Match.Hash_layout(),
+                    };
+                    if (this.customImage)
+                    {
+                        katka.CustomPicture = App.Current.Properties[AppPropertyKeys.CustomImagePath].ToString();
+                    }
 
-                DBManager.AddMatch(katka);
-                MainWindow window = new MainWindow();
-                window.Show();
-                this.Close();
+                    DBManager.AddMatch(katka);
+                    MainWindow window = new MainWindow();
+                    window.Show();
+                    this.Close();
+                }
+                catch (System.InvalidOperationException ex)
+                {
+                    MessageBox.Show(ex.InnerException.Message);
+                }
             }
         }
 
@@ -163,8 +170,16 @@ namespace Fifteens
             {
                 this.dispatcherTimer.Stop();
                 this.score = Math.Max(1000000 - (this.Duration * this.Match.Turns), 0);
-                this.SaveMatch();
-                MessageBox.Show($"Your score: {this.score}", "Result");
+                int status = this.SaveMatch();
+                if (status == 1)
+                {
+                    MessageBox.Show($"Your score: {this.score}, game will not be saved due to connection errors", "Result");
+                }
+                else
+                {
+                    MessageBox.Show($"Your score: {this.score}", "Result");
+                }
+
                 MainWindow window = new MainWindow();
                 window.Show();
                 this.Close();
@@ -197,23 +212,33 @@ namespace Fifteens
             }
         }
 
-        private void SaveMatch()
+        private int SaveMatch()
         {
-            if (this.databaseMatchId != -1)
+            try
             {
-                DBManager.DeleteMatch(this.databaseMatchId);
+                if (this.databaseMatchId != -1)
+                {
+                    DBManager.DeleteMatch(this.databaseMatchId);
+                }
+
+                DBManager.AddMatch(new Match()
+                {
+                    UserId = (int)App.Current.Properties[AppPropertyKeys.UserID],
+                    Duration = this.Duration,
+                    DateTime = this.MatchStartDateTime,
+                    Score = this.score,
+                    Result = true,
+                    Turns = this.Match.Turns,
+                    Size = this.GameSize,
+                });
+            }
+            catch (System.InvalidOperationException ex)
+            {
+                MessageBox.Show(ex.InnerException.Message);
+                return 1;
             }
 
-            DBManager.AddMatch(new Match()
-            {
-                UserId = (int)App.Current.Properties[AppPropertyKeys.UserID],
-                Duration = this.Duration,
-                DateTime = this.MatchStartDateTime,
-                Score = this.score,
-                Result = true,
-                Turns = this.Match.Turns,
-                Size = this.GameSize,
-            });
+            return 0;
         }
 
         private void UpdateButtons()

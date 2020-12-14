@@ -36,7 +36,9 @@ namespace Fifteens
                 IsolatedStorageFile isolatedStorage = IsolatedStorageFile.GetUserStoreForAssembly();
                 StreamWriter srWriter = new StreamWriter(new IsolatedStorageFileStream("remember_me", FileMode.Create, isolatedStorage));
 
-                if ((bool)App.Current.Properties[AppPropertyKeys.RememberMe] && App.Current.Properties.Contains(AppPropertyKeys.Login))
+                if (App.Current.Properties.Contains(AppPropertyKeys.RememberMe) && 
+                    (bool)App.Current.Properties[AppPropertyKeys.RememberMe] && 
+                    App.Current.Properties.Contains(AppPropertyKeys.Login))
                 {
                     srWriter.WriteLine(App.Current.Properties[AppPropertyKeys.UserID].ToString() + "\n" + 
                                         App.Current.Properties[AppPropertyKeys.Login].ToString() + "\n" +

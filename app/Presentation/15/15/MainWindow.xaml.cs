@@ -94,8 +94,15 @@ namespace Fifteens
             var res = MessageBox.Show("Do you want to delete this account permanently?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (res == MessageBoxResult.Yes)
             {
-                DBManager.DeleteUser((int)App.Current.Properties[AppPropertyKeys.UserID]);
-                this.OnClickLogOut(sender, e);
+                try
+                {
+                    DBManager.DeleteUser((int)App.Current.Properties[AppPropertyKeys.UserID]);
+                    this.OnClickLogOut(sender, e);
+                }
+                catch (System.InvalidOperationException ex)
+                {
+                    MessageBox.Show(ex.InnerException.Message);
+                }
             }
         }
     }
