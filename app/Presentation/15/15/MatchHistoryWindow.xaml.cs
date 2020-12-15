@@ -47,6 +47,7 @@ namespace Fifteens
             catch (System.InvalidOperationException ex)
             {
                 MessageBox.Show(ex.InnerException.Message);
+                Logger.Log.Error(ex);
             }
 
             this.MatchesList.ItemsSource = this.Lines;
