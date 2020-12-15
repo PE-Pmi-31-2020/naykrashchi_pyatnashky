@@ -18,6 +18,7 @@ namespace Fifteens
     using System.Windows.Media.Imaging;
     using System.Windows.Shapes;
     using DAL;
+    using BLL;
 
     /// <summary>
     /// Interaction logic for MatchHistoryWindow.xaml.
