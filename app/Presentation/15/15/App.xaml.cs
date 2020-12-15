@@ -60,6 +60,10 @@ namespace Fifteens
         protected override void OnStartup(StartupEventArgs e)
         {
             Logger.InitLogger();
+<<<<<<< HEAD
+=======
+            Logger.Log.Info("Run program");
+>>>>>>> 0631ddc3445daaad11994b1fbd74f9101e789ac2
             try
             {
                 IsolatedStorageFile isolatedStorage = IsolatedStorageFile.GetUserStoreForAssembly();

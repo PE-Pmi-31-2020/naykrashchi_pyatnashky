@@ -54,10 +54,12 @@ namespace Fifteens
                     this.SaveRememberMeValue();
                     this.StoreUserData(userID, login, password);
                     this.GoToMainWindow();
+                    Logger.Log.Info("User signed in");
                 }
                 else
                 {
                     MessageBox.Show("Wrong login or password");
+                    Logger.Log.Warn("Wrong login or password");
                 }
             }
             catch (System.InvalidOperationException ex)
