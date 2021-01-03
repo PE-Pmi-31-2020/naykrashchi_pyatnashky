@@ -53,13 +53,13 @@ namespace Fifteens
                 {
                     this.SaveRememberMeValue();
                     this.StoreUserData(userID, login, password);
+                    Logger.Log.Info("User signed in");
                     this.GoToMainWindow();
                 }
                 else
                 {
                     MessageBox.Show("Wrong login or password");
                 }
-                Logger.Log.Info("User signed in");
             }
             catch (System.InvalidOperationException ex)
             {
@@ -79,6 +79,11 @@ namespace Fifteens
             string password = this.PasswordInput.Password;
             try
             {
+                if (login.Length < 3 || password.Length < 3)
+                {
+                    throw new FormatException("Login and password must contain at least 3 letters");
+                }
+
                 int userID = DBManager.AddUser(login, password);
                 this.SaveRememberMeValue();
                 this.StoreUserData(userID, login, password);
@@ -100,6 +105,11 @@ namespace Fifteens
             catch (System.InvalidOperationException ex)
             {
                 MessageBox.Show(ex.InnerException.Message);
+                Logger.Log.Error(ex);
+            }
+            catch (FormatException ex)
+            {
+                MessageBox.Show(ex.Message);
                 Logger.Log.Error(ex);
             }
         }
