@@ -6,6 +6,7 @@ namespace Fifteens
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Text;
     using System.Windows;
     using System.Windows.Controls;
@@ -49,11 +50,12 @@ namespace Fifteens
             this.Duration = 0;
             this.GameSize = gameSize;
             this.Match = new Game(this.GameSize);
-            this.customImage = customImage;
+            this.customImage = false;
             this.MatchStartDateTime = DateTime.Now;
             this.databaseMatchId = -1;
-            if (this.customImage)
+            if (customImage && File.Exists(@App.Current.Properties[AppPropertyKeys.CustomImagePath].ToString()))
             {
+                this.customImage = true;
                 this.CropImage();
             }
 
@@ -72,7 +74,11 @@ namespace Fifteens
             this.GameSize = match.Size.Value;
             this.Match = new Game(match.Layout, match.Turns.Value);
             this.TurnsLabel.Content = "Turns: " + this.Match.Turns;
-            this.customImage = match.CustomPicture == null ? false : true;
+            if (match.CustomPicture != null && File.Exists(match.CustomPicture))
+            {
+                this.customImage = true;
+            }
+
             this.MatchStartDateTime = DateTime.Now;
             this.databaseMatchId = match.MatchId;
             if (this.customImage)
