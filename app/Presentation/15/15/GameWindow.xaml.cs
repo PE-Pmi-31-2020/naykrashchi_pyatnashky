@@ -129,6 +129,7 @@ namespace Fifteens
                         katka.CustomPicture = App.Current.Properties[AppPropertyKeys.CustomImagePath].ToString();
                     }
 
+                    Logger.Log.Info("Unfinished game saved.");
                     DBManager.AddMatch(katka);
                     MainWindow window = new MainWindow();
                     window.Show();
@@ -171,7 +172,7 @@ namespace Fifteens
             this.UpdateButtons();
             if (this.Match.Solved())
             {
-                Logger.Log.Info("Game Finished");
+                Logger.Log.Info("Game Finished.");
                 this.dispatcherTimer.Stop();
                 this.score = Math.Max(1000000 - (this.Duration * this.Match.Turns), 0);
                 int status = this.SaveMatch();
@@ -235,7 +236,7 @@ namespace Fifteens
                     Turns = this.Match.Turns,
                     Size = this.GameSize,
                 });
-                Logger.Log.Info("Match saved");
+                Logger.Log.Info("Finished game saved.");
             }
             catch (System.InvalidOperationException ex)
             {

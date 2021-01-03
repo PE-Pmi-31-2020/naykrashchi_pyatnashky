@@ -61,6 +61,7 @@ namespace Fifteens
         {
             Logger.InitLogger();
             Logger.Log.Info("Application started");
+
             try
             {
                 IsolatedStorageFile isolatedStorage = IsolatedStorageFile.GetUserStoreForAssembly();
