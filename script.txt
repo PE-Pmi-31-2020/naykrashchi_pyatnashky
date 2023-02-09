@@ -10,8 +10,9 @@ CREATE TABLE "match"(
   date_time timestamp,
   score int,
   "result" boolean,
-  layout bigint,
+  layout varchar,
   turns int,
+  "size" int,
   custom_picture varchar(100),
   foreign key (user_id) references "user"(user_id)
 )
