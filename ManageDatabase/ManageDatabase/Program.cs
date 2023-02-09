@@ -26,8 +26,9 @@ namespace ManageDatabase
                         "date_time TIMESTAMP, " +
                         "score INT, " +
                         "\"result\" BOOLEAN, " +
-                        "layout BIGINT, " +
+                        "layout VARCHAR, " +
                         "turns INT, " +
+                        "\"size\" int," +
                         "custom_picture VARCHAR(100), " +
                         "FOREIGN KEY(user_id) REFERENCES \"user\"(user_id))";
                     cmd.ExecuteNonQuery();  
@@ -121,9 +122,9 @@ namespace ManageDatabase
         static void Main(string[] args)
         {
             string connectionString = "Server=127.0.0.1;Port=5432;Database=fifteens_database;User Id=postgres;Password=555;";
-            //CreateDataBase(connectionString);
-            FillUserWithTestData(connectionString, 30);
-            PrintData(connectionString);
+            CreateDataBase(connectionString);
+            //FillUserWithTestData(connectionString, 30);
+            //PrintData(connectionString);
         }
     }
 }
