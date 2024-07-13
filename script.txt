@@ -1,3 +1,5 @@
+POSTGRES:
+
 CREATE TABLE "user"(
 user_id serial primary key,
 login varchar(50) unique not null,
@@ -5,6 +7,27 @@ password varchar(50) not null
 );
 CREATE TABLE "match"(
   match_id serial primary key,
+  user_id int, 
+  duration int,
+  date_time timestamp,
+  score int,
+  "result" boolean,
+  layout varchar,
+  turns int,
+  "size" int,
+  custom_picture varchar(100),
+  foreign key (user_id) references "user"(user_id)
+)
+
+SQLITE:
+
+CREATE TABLE "user"(
+user_id INTEGER primary key,
+login varchar(50) unique not null,
+password varchar(50) not null
+);
+CREATE TABLE "match"(
+  match_id INTEGER primary key,
   user_id int, 
   duration int,
   date_time timestamp,

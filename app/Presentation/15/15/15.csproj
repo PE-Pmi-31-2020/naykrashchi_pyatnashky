@@ -3,8 +3,9 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>_15</RootNamespace>
+    <RootNamespace>Fifteens</RootNamespace>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>fifteen.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +14,10 @@
 
   <ItemGroup>
     <AdditionalFiles Include="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="fifteen.ico" />
   </ItemGroup>
 
   <ItemGroup>

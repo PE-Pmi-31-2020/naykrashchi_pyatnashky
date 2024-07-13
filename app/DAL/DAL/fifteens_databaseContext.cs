@@ -50,7 +50,7 @@ namespace DAL
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseNpgsql(ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString);
+                optionsBuilder.UseSqlite(ConfigurationManager.ConnectionStrings["SQLiteDBConnection"].ConnectionString);
             }
         }
 
