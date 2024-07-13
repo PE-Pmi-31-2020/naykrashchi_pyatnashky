@@ -23,7 +23,7 @@ namespace Fifteens
     /// <summary>
     /// Interaction logic for MatchPickWindow.xaml.
     /// </summary>
-    public partial class MatchPickWindow : Window
+    public partial class MatchPickWindow : UserControl
     {
         private GridViewColumnHeader lastHeaderClicked = null;
         private ListSortDirection lastDirection = ListSortDirection.Ascending;
@@ -34,6 +34,7 @@ namespace Fifteens
         public MatchPickWindow()
         {
             this.InitializeComponent();
+            this.Loaded += new RoutedEventHandler(this.SetTitle);
             this.BackButton.Click += this.OnClickBack;
             this.Lines = new ObservableCollection<MatchHistoryLine>();
 
@@ -59,15 +60,20 @@ namespace Fifteens
         /// </summary>
         public ObservableCollection<MatchHistoryLine> Lines { get; set; }
 
+        private void SetTitle(object sender, RoutedEventArgs e)
+        {
+            Window.GetWindow(this).Title = "Load game";
+        }
+
         private void StartGame(object sender, SelectionChangedEventArgs args)
         {
             MatchHistoryLine lbi = (sender as ListBox).SelectedItems[0] as MatchHistoryLine;
             try
             {
                 Match match = DBManager.GetMatch(lbi.MatchId.Value);
-                GameWindow window = new GameWindow(match);
-                window.Show();
-                this.Close();
+                Window wnd = Window.GetWindow(this);
+                GameWindow window = new GameWindow(match, wnd.Height, wnd.Width);
+                this.Content = window;
             }
             catch (System.InvalidOperationException ex)
             {
@@ -79,8 +85,7 @@ namespace Fifteens
         private void OnClickBack(object sender, RoutedEventArgs e)
         {
             MainWindow window = new MainWindow();
-            window.Show();
-            this.Close();
+            this.Content = window;
         }
 
         private void GridViewColumnHeaderClickedHandler(object sender, RoutedEventArgs e)

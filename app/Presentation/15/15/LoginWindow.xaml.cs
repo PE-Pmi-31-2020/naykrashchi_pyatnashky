@@ -23,7 +23,7 @@ namespace Fifteens
     /// <summary>
     /// Interaction logic for LoginWindow.xaml.
     /// </summary>
-    public partial class LoginWindow : Window
+    public partial class LoginWindow : UserControl
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="LoginWindow"/> class.
@@ -31,6 +31,9 @@ namespace Fifteens
         public LoginWindow()
         {
             this.InitializeComponent();
+            this.Loaded += new RoutedEventHandler(this.SetTitle);
+
+
             if (App.Current.Properties.Contains(AppPropertyKeys.Login))
             {
                 this.GoToMainWindow();
@@ -39,6 +42,11 @@ namespace Fifteens
             this.LogInButton.Click += this.Login;
             this.SignUpButton.Click += this.SignUp;
             this.ExitButton.Click += this.OnClickExit;
+        }
+
+        private void SetTitle(object sender, RoutedEventArgs e)
+        {
+            Window.GetWindow(this).Title = "Login";
         }
 
         private void Login(object sender, RoutedEventArgs e)
@@ -72,7 +80,7 @@ namespace Fifteens
 
         private void OnClickExit(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Application.Current.Shutdown();
         }
 
         private void SignUp(object sender, RoutedEventArgs e)
@@ -131,8 +139,7 @@ namespace Fifteens
         private void GoToMainWindow()
         {
             MainWindow window = new MainWindow();
-            window.Show();
-            this.Close();
+            this.Content = window;
         }
     }
 }

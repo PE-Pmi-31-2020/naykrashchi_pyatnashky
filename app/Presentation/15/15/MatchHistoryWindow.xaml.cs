@@ -23,7 +23,7 @@ namespace Fifteens
     /// <summary>
     /// Interaction logic for MatchHistoryWindow.xaml.
     /// </summary>
-    public partial class MatchHistoryWindow : Window
+    public partial class MatchHistoryWindow : UserControl
     {
         private GridViewColumnHeader lastHeaderClicked = null;
         private ListSortDirection lastDirection = ListSortDirection.Ascending;
@@ -34,6 +34,7 @@ namespace Fifteens
         public MatchHistoryWindow()
         {
             this.InitializeComponent();
+            this.Loaded += new RoutedEventHandler(this.SetTitle);
             this.BackButton.Click += this.OnClickBack;
 
             this.Lines = new ObservableCollection<MatchHistoryLine>();
@@ -59,11 +60,15 @@ namespace Fifteens
         /// </summary>
         public ObservableCollection<MatchHistoryLine> Lines { get; set; }
 
+        private void SetTitle(object sender, RoutedEventArgs e)
+        {
+            Window.GetWindow(this).Title = "Match history";
+        }
+
         private void OnClickBack(object sender, RoutedEventArgs e)
         {
             MainWindow window = new MainWindow();
-            window.Show();
-            this.Close();
+            this.Content = window;
         }
 
         private void GridViewColumnHeaderClickedHandler(object sender, RoutedEventArgs e)

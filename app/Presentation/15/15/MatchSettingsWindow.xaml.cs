@@ -21,7 +21,7 @@ namespace Fifteens
     /// <summary>
     /// Interaction logic for MatchSettingsWindow.xaml.
     /// </summary>
-    public partial class MatchSettingsWindow : Window
+    public partial class MatchSettingsWindow : UserControl
     {
         private bool customImage;
 
@@ -31,25 +31,30 @@ namespace Fifteens
         public MatchSettingsWindow()
         {
             this.InitializeComponent();
+            this.Loaded += new RoutedEventHandler(this.SetTitle);
             this.OKButton.Click += this.OnClickOKButton;
             this.ChooseCustomImage.Click += this.OnClickChooseCustomImage;
             this.BackButton.Click += this.OnClickBack;
             this.customImage = false;
         }
 
+        private void SetTitle(object sender, RoutedEventArgs e)
+        {
+            Window.GetWindow(this).Title = "Match settings";
+        }
+
         private void OnClickBack(object sender, RoutedEventArgs e)
         {
             MainWindow window = new MainWindow();
-            window.Show();
-            this.Close();
+            this.Content = window;
         }
 
         private void OnClickOKButton(object sender, RoutedEventArgs e)
         {
             int size = this.radio4.IsChecked.Value ? 4 : this.radio5.IsChecked.Value ? 5 : 6;
-            GameWindow window = new GameWindow(size, this.customImage);
-            window.Show();
-            this.Close();
+            Window wnd = Window.GetWindow(this);
+            GameWindow window = new GameWindow(size, this.customImage, wnd.Height, wnd.Width);
+            this.Content = window;
         }
 
         private void OnClickChooseCustomImage(object sender, RoutedEventArgs e)

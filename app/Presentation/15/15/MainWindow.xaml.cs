@@ -24,7 +24,7 @@ namespace Fifteens
     /// <summary>
     /// Interaction logic for MainWindow.xaml.
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : UserControl
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
@@ -34,6 +34,7 @@ namespace Fifteens
         public MainWindow()
         {
             this.InitializeComponent();
+            this.Loaded += new RoutedEventHandler(this.SetTitle);
             this.NicknameLabel.Content = App.Current.Properties[AppPropertyKeys.Login];
             this.NewGameButton.Click += this.OnClickNewGame;
             this.ExitButton.Click += this.OnClickExit;
@@ -41,6 +42,11 @@ namespace Fifteens
             this.LogOutButton.Click += this.OnClickLogOut;
             this.DeleteAccButton.Click += this.OnClickDeleteAcc;
             this.ContinueGameButton.Click += this.OnClickContinueGame;
+        }
+
+        private void SetTitle(object sender, RoutedEventArgs e)
+        {
+            Window.GetWindow(this).Title = "Pyatnashki";
         }
 
         /// <summary>
@@ -56,28 +62,25 @@ namespace Fifteens
         private void OnClickNewGame(object sender, RoutedEventArgs e)
         {
             MatchSettingsWindow window = new MatchSettingsWindow();
-            window.Show();
-            this.Close();
+            this.Content = window;
         }
 
         private void OnClickContinueGame(object sender, RoutedEventArgs e)
         {
             MatchPickWindow window = new MatchPickWindow();
-            window.Show();
-            this.Close();
+            this.Content = window;
         }
 
         private void OnClickMatchHistory(object sender, RoutedEventArgs e)
         {
             MatchHistoryWindow window = new MatchHistoryWindow();
-            window.Show();
-            this.Close();
+            this.Content = window;
         }
 
         private void OnClickExit(object sender, RoutedEventArgs e)
         {
             Logger.Log.Info("Program closed.");
-            this.Close();
+            Application.Current.Shutdown();
         }
 
         private void OnClickLogOut(object sender, RoutedEventArgs e)
@@ -88,8 +91,7 @@ namespace Fifteens
             App.Current.Properties.Remove(AppPropertyKeys.RememberMe);
             LoginWindow window = new LoginWindow();
             Logger.Log.Info("User logged out.");
-            window.Show();
-            this.Close();
+            this.Content = window;
         }
 
         private void OnClickDeleteAcc(object sender, RoutedEventArgs e)

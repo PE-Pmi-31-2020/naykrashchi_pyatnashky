@@ -1,11 +1,11 @@
-﻿<Window x:Class="Fifteens.MatchSettingsWindow"
+﻿<UserControl x:Class="Fifteens.MatchSettingsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Fifteens"
         mc:Ignorable="d"
-        Title="Match settings" Height="450" Width="800">
+        d:DesignHeight="450" d:DesignWidth="900">
     <Grid>
         <DockPanel Background="{StaticResource BackgroundBrush}" LastChildFill="True">
             <Button x:Name="BackButton" DockPanel.Dock="Top" Content="Back" MinWidth="50" Margin="10" HorizontalAlignment="Left"/>
@@ -20,5 +20,5 @@
             </StackPanel>
         </DockPanel>
     </Grid>
-</Window>
+</UserControl>
 

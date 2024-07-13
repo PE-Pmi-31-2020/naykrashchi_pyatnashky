@@ -23,7 +23,7 @@ namespace Fifteens
     /// <summary>
     /// Interaction logic for GameWindow.xaml.
     /// </summary>
-    public partial class GameWindow : Window
+    public partial class GameWindow : UserControl
     {
         private DispatcherTimer dispatcherTimer;
 
@@ -40,10 +40,12 @@ namespace Fifteens
         /// <summary>
         /// Initializes a new instance of the <see cref="GameWindow"/> class.
         /// </summary>
-        public GameWindow(int gameSize, bool customImage)
+        public GameWindow(int gameSize, bool customImage, double windowHeight, double windowWidth)
         {
             Logger.Log.Info("new game started");
             this.InitializeComponent();
+            this.Loaded += new RoutedEventHandler(this.SetTitle);
+            this.SizeChanged += new SizeChangedEventHandler(this.OnResize);
             this.BackButton.Click += this.OnClickBack;
             this.SaveMatchButton.Click += this.OnClickSaveMatch;
             this.isFirstMove = true;
@@ -59,13 +61,15 @@ namespace Fifteens
                 this.CropImage();
             }
 
-            this.InitGame();
+            this.InitGame(windowHeight, windowWidth);
         }
 
-        public GameWindow(Match match)
+        public GameWindow(Match match, double windowHeight, double windowWidth)
         {
             Logger.Log.Info("game loaded");
             this.InitializeComponent();
+            this.Loaded += new RoutedEventHandler(this.SetTitle);
+            this.SizeChanged += new SizeChangedEventHandler(this.OnResize);
             this.BackButton.Click += this.OnClickBack;
             this.SaveMatchButton.Click += this.OnClickSaveMatch;
             this.isFirstMove = true;
@@ -87,7 +91,7 @@ namespace Fifteens
                 this.CropImage();
             }
 
-            this.InitGame();
+            this.InitGame(windowHeight, windowWidth);
         }
 
         public Game Match { get; set; }
@@ -100,11 +104,15 @@ namespace Fifteens
 
         public DateTime MatchStartDateTime { get; set; }
 
+        private void SetTitle(object sender, RoutedEventArgs e)
+        {
+            Window.GetWindow(this).Title = "Pyatnashki";
+        }
+
         private void OnClickBack(object sender, RoutedEventArgs e)
         {
             MainWindow window = new MainWindow();
-            window.Show();
-            this.Close();
+            this.Content = window;
         }
 
         private void OnClickSaveMatch(object sender, RoutedEventArgs e)
@@ -138,8 +146,7 @@ namespace Fifteens
                     Logger.Log.Info("Unfinished game saved.");
                     DBManager.AddMatch(katka);
                     MainWindow window = new MainWindow();
-                    window.Show();
-                    this.Close();
+                    this.Content = window;
                 }
                 catch (System.InvalidOperationException ex)
                 {
@@ -192,8 +199,7 @@ namespace Fifteens
                 }
 
                 MainWindow window = new MainWindow();
-                window.Show();
-                this.Close();
+                this.Content = window;
             }
         }
 
@@ -286,11 +292,12 @@ namespace Fifteens
             }
         }
 
-        private void InitGame()
+        private void InitGame(double windowHeight, double windowWidth)
         {
-            double buttonHeight = this.Height / 2 / this.GameSize;
-            double buttonWidth = this.Width / 2 / this.GameSize;
-
+            double buttonHeight = windowHeight / 2 / this.GameSize;
+            double buttonWidth = windowWidth / 2 / this.GameSize;
+            this.FieldContainer.Height = windowHeight / 2;
+            this.FieldContainer.Width = windowWidth / 2;
             this.GameField = new Button[this.GameSize, this.GameSize];
             for (int i = 0; i < this.GameSize; i++)
             {
@@ -313,6 +320,24 @@ namespace Fifteens
                             this.GameField[i, j].Content = this.Match.Layout[i][j];
                         }
                     }
+                }
+            }
+        }
+
+        private void OnResize(object sender, SizeChangedEventArgs e)
+        {
+            double windowHeight = e.NewSize.Height;
+            double windowWidth = e.NewSize.Width;
+            double buttonHeight = windowHeight / 2 / this.GameSize;
+            double buttonWidth = windowWidth / 2 / this.GameSize;
+            this.FieldContainer.Height = windowHeight / 2;
+            this.FieldContainer.Width = windowWidth / 2;
+            for (int i = 0; i < this.GameSize; i++)
+            {
+                for (int j = 0; j < this.GameSize; j++)
+                {
+                    this.GameField[i, j].Height = buttonHeight;
+                    this.GameField[i, j].Width = buttonWidth;
                 }
             }
         }
