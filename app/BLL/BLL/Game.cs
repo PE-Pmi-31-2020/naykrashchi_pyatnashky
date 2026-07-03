@@ -285,13 +285,12 @@ namespace BLL
                     }
                 }
 
-                if (l[i] == 0)
+                if (l[i] == 0 && this.Size % 2 == 0)
                 {
                     inversions += 1 + (i / this.Size);
                 }
             }
-
-            return ((inversions + this.Size) & 1) == 0;
+            return (inversions & 1) == 0;
         }
 
         /// <summary>
